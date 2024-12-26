@@ -42,14 +42,13 @@ import OTPVerification from "./Pages/OTPVerification/OTPVerification.jsx";
 import SyllabusDrawer from "./Pages/SyllabusTracker/SyllabusDrawer.jsx";
 const App = () => {
   const dispatch = useDispatch();
-  
   const [notification,setNotification] = useState([])
   const [soundEnabled, setSoundEnabled] = useState(false); // Control sound permissions
   const sound = new Audio(notificationSound); 
   
   let socket = useMemo(
     () =>
-      io(process.env.REACT_APP_API_URL, {
+      io(import.meta.env.VITE_API_URL, {
           withCredentials: true
          }),
       []

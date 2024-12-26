@@ -111,7 +111,7 @@ const store = configureStore({
     syllabus:syllabusGetter,
     syllabusUpdate:syllabusTrackerEditor
   },
-  devTools:process.env.NODE_ENV === 'development' ? true : false
+  devTools:import.meta.env.VITE_NODE_ENV === 'development' ? true : false
 });
 
 export default store;
