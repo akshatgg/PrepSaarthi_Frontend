@@ -452,18 +452,29 @@ export const popUpState = createAsyncThunk(
     }
   }
 );
+
 export const stusendOTP = createAsyncThunk(
   "student/send/OTP",
-  async ({email, mobileNumber}, { rejectWithValue }) => {
+  async ({ email, mobileNumber }, { rejectWithValue }) => {
     try {
-      const config = {headers:{"Content-Type" : "application/json"}}
-      const { data } = await axiosInstance.post(`/v1/student/send/otp`,{email,mobileNumber},config);
+      const config = { headers: { "Content-Type": "application/json" } };
+      const payload = {};
+      if (email) payload.email = email;
+      if (mobileNumber) payload.mobileNumber = mobileNumber;
+
+      const { data } = await axiosInstance.post(
+        `/v1/student/send/otp`,
+        payload,
+        config
+      );
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
   }
 );
+
+
 export const resendOTP = createAsyncThunk(
   "mentor/resend/OTP",
   async ({email, mobileNumber}, { rejectWithValue }) => {

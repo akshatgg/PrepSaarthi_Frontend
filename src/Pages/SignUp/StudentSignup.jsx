@@ -436,9 +436,15 @@ export default function StudentSignUp() {
                    <Stack direction="row" spacing={2} alignItems="center">
                      {/* OTP Input */}
                      <OTP 
+                     name="emailOTP"
+                     id="emailOTP"
+                     autoComplete="emailOTP"
                        separator={<span>-</span>} 
                        value={gmailOtp} 
-                       onChange={setgmailOtp} 
+                       onChange={()=>{
+                         handleChange();
+                        setgmailOtp
+                       }} 
                        length={5} 
                      />    
                      
@@ -517,9 +523,14 @@ export default function StudentSignUp() {
   <Stack direction="row" spacing={2} alignItems="center">
     {/* OTP Input */}
     <OTP 
+    id="numberOTP"
+     name="numberOTP"
       separator={<span>-</span>} 
       value={NumbOtp} 
-      onChange={setNumbOtp} 
+      onChange={()=>{
+        handleChange();
+        setNumbOtp
+      }} 
       length={5} 
     />    
 
@@ -529,7 +540,7 @@ export default function StudentSignUp() {
   <LoadingButton 
                   loading={reLoading}
                   onClick={() => {
-                    dispatch(sturesendOTP({email: studentInfo.email,
+                    dispatch(sturesendOTP({
                       mobileNumber: studentInfo.phoneNo
                      }))
                   }}>Resend OTP</LoadingButton>
