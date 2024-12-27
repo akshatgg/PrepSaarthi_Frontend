@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 import MetaData from "../../utils/Metadata";
 import CircularProgress from "@mui/material/CircularProgress";
 import imageCompression from "browser-image-compression";
-import { reset, stusendOTP,clearError as otpClearError, sturesendOTP, otpReset } from "../../action/userAction";
+import { reset, stusendOTP,clearError as otpClearError, sturesendOTP, otpReset, stuVerifyOTP } from "../../action/userAction";
 import SendIcon from '@mui/icons-material/Send';
 import { InputAdornment } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -441,15 +441,19 @@ export default function StudentSignUp() {
                      autoComplete="emailOTP"
                        separator={<span>-</span>} 
                        value={gmailOtp} 
-                       onChange={()=>{
+                       onChange={(otp)=>{
                          handleChange();
-                        setgmailOtp
+                        setgmailOtp(otp)
                        }} 
                        length={5} 
                      />    
                      
                      {/* Verify Button */}
-                     <SubButton>Verify</SubButton>
+                     <SubButton onClick={()=>{
+                      dispatch(stuVerifyOTP(gmailOtp))
+                     }
+
+                     }>Verify</SubButton>
                    </Stack>
                   
                   
@@ -527,15 +531,19 @@ export default function StudentSignUp() {
      name="numberOTP"
       separator={<span>-</span>} 
       value={NumbOtp} 
-      onChange={()=>{
+      onChange={(otp)=>{
         handleChange();
-        setNumbOtp
+        setNumbOtp(otp)
       }} 
       length={5} 
     />    
 
     {/* Button */}
-    <SubButton>Verify</SubButton>
+    <SubButton 
+    onClick={()=>{
+      dispatch(stuVerifyOTP(NumbOtp))
+    }}
+    >Verify</SubButton>
   </Stack>
   <LoadingButton 
                   loading={reLoading}
@@ -644,6 +652,8 @@ export default function StudentSignUp() {
                     //   );
                     // }}
                     fullWidth
+                    loading={loading}
+                    disabled={uploading}
                     sx={!sent ? {
                       display:'block',
                       mt: 3,
@@ -658,7 +668,7 @@ export default function StudentSignUp() {
                    Sign Up
                   </LoadingButton>
                 </Grid>
-                <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
+                {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <TextField
                     required
                     fullWidth
@@ -668,10 +678,10 @@ export default function StudentSignUp() {
                     autoComplete="emailOTP"
                     onChange={handleChange}
                   />
-                </Grid>
+                </Grid> */}
                     
                 </Grid>
-                <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
+                {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <Typography variant="p">
                     By signing up you are agreeing to our{" "}
                     <Link style={{ textDecoration: "underline" }} to="/privacy">
@@ -695,7 +705,7 @@ export default function StudentSignUp() {
               >
                 Sign Up
               </LoadingButton>
-                </Grid>
+                </Grid> */}
                
               </Grid>
               
