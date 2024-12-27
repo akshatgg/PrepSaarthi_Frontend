@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
 import { Input as BaseInput } from '@mui/base/Input';
 import { styled } from '@mui/system';
 // import OTP from "../../Components/OTPstr/OTPstr";
-
-
+import { Button as BaseButton, buttonClasses } from '@mui/base/Button';
+import Stack from '@mui/material/Stack';
 
 
 const defaultTheme = createTheme();
@@ -392,44 +392,75 @@ export default function StudentSignUp() {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    disabled={sent}
-                    onChange={handleChange}
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                        <LoadingButton 
-                        variant="contained" 
-                          sx={{
-                           padding: "4px 10px", // Adjust the padding as needed
-                           minWidth: "auto", // Remove the default minimum width of the button
-                               }}
-                               loading={Gmailloading}
-                               onClick={GmailhandleClick}>
-                          
-                         <SendIcon/>
-                      </LoadingButton>
-            
-                   </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
+  <TextField
+    required
+    fullWidth
+    disabled={sent}
+    onChange={handleChange}
+    id="email"
+    label="Email Address"
+    name="email"
+    autoComplete="email"
+    InputProps={{
+      endAdornment: (
+        <InputAdornment position="end">
+          <LoadingButton
+            variant="contained"
+            sx={{
+              padding: "4px 10px", // Adjust the padding as needed
+              minWidth: "auto", // Remove the default minimum width of the button
+            }}
+            // loading={Gmailloading}
+            loading={otpLoading} 
+            onClick={() => {
+              GmailhandleClick(); // Call the GmailhandleClick function
+              dispatch(
+                stusendOTP({
+                  email: studentInfo.email,
+                 
+                })
+              );
+            }}
+          >
+            <SendIcon />
+          </LoadingButton>
+        </InputAdornment>
+      ),
+    }}
+  />
+</Grid>
+
                 {GmailOTPBoxes &&(
-                  <>
-                    <Grid item xs={12}>
-     <OTP separator={<span>-</span>} value={gmailOtp} onChange={setgmailOtp} length={6}/>    
-    </Grid>
-                  </>
+                 <>
+                 <Grid item xs={12}>
+                   <Stack direction="row" spacing={2} alignItems="center">
+                     {/* OTP Input */}
+                     <OTP 
+                       separator={<span>-</span>} 
+                       value={gmailOtp} 
+                       onChange={setgmailOtp} 
+                       length={5} 
+                     />    
+                     
+                     {/* Verify Button */}
+                     <SubButton>Verify</SubButton>
+                   </Stack>
+                  
+                  
+                  <LoadingButton 
+                  loading={reLoading}
+                  onClick={() => {
+                    dispatch(sturesendOTP({email: studentInfo.email,
+                     }))
+                  }}>Resend OTP</LoadingButton>
+                </Grid>
+                 
+                 
+               </>
+               
                 )
                   
-                }
+                }         
                 <Grid item xs={12}>
       <TextField
         required
@@ -449,8 +480,18 @@ export default function StudentSignUp() {
                padding: "4px 10px", // Adjust the padding as needed
                minWidth: "auto", // Remove the default minimum width of the button
                    }}
-              loading={Numbloading}
-               onClick={NumbhandleClick}>
+              // loading={Numbloading}
+              loading={otpLoading} 
+               onClick={()=>{
+                NumbhandleClick();
+                dispatch(
+                  stusendOTP({
+                    
+                    phoneNo: studentInfo.phoneNo,
+                  })
+                );
+              }
+                }>
              <SendIcon/>
           </LoadingButton>
 
@@ -472,9 +513,28 @@ export default function StudentSignUp() {
         onChange={handleChange}
       />
     </Grid> */}
-    <Grid item xs={12}>
-     <OTP separator={<span>-</span>} value={NumbOtp} onChange={setNumbOtp} length={4}/>    
-    </Grid>
+   <Grid item xs={12}>
+  <Stack direction="row" spacing={2} alignItems="center">
+    {/* OTP Input */}
+    <OTP 
+      separator={<span>-</span>} 
+      value={NumbOtp} 
+      onChange={setNumbOtp} 
+      length={5} 
+    />    
+
+    {/* Button */}
+    <SubButton>Verify</SubButton>
+  </Stack>
+  <LoadingButton 
+                  loading={reLoading}
+                  onClick={() => {
+                    dispatch(sturesendOTP({email: studentInfo.email,
+                      mobileNumber: studentInfo.phoneNo
+                     }))
+                  }}>Resend OTP</LoadingButton>
+</Grid>
+
   </>
 )}
                
@@ -563,15 +623,15 @@ export default function StudentSignUp() {
                   </Box>
                   <Grid item xs={12}>
                   <LoadingButton
-                    loading={otpLoading}
-                    onClick={() => {
-                      dispatch(
-                        stusendOTP({
-                          email: studentInfo.email,
-                          mobileNumber: studentInfo.phoneNo,
-                        })
-                      );
-                    }}
+                    // loading={otpLoading}
+                    // onClick={() => {
+                    //   dispatch(
+                    //     stusendOTP({
+                    //       email: studentInfo.email,
+                    //       mobileNumber: studentInfo.phoneNo,
+                    //     })
+                    //   );
+                    // }}
                     fullWidth
                     sx={!sent ? {
                       display:'block',
@@ -584,7 +644,7 @@ export default function StudentSignUp() {
                       "&:hover": { backgroundColor: "var(--button1Hover)" },
                     } : {display:"none"}}
                   >
-                    Verify your Email and Number
+                   Sign Up
                   </LoadingButton>
                 </Grid>
                 <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
@@ -598,23 +658,7 @@ export default function StudentSignUp() {
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="numberOTP"
-                    label="Mobile Number Verification Code"
-                    name="numberOTP"
-                    autoComplete="numberOTP"
-                    onChange={handleChange}
-                  />
-                  <LoadingButton 
-                  loading={reLoading}
-                  onClick={() => {
-                    dispatch(sturesendOTP({email: studentInfo.email,
-                      mobileNumber: studentInfo.phoneNo}))
-                  }}>Resend OTP</LoadingButton>
-                </Grid>
+                    
                 </Grid>
                 <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <Typography variant="p">
@@ -683,6 +727,14 @@ const grey = {
   800: '#303740',
   900: '#1C2025',
 };
+const blueBtn = {
+  200: '#99CCFF',
+  300: '#66B2FF',
+  400: '#3399FF',
+  500: '#007FFF',
+  600: '#0072E5',
+  700: '#0066CC',
+};
 
 const InputElement = styled('input')(
   ({ theme }) => `
@@ -715,4 +767,47 @@ const InputElement = styled('input')(
     outline: 0;
   }
 `,
+);
+
+const SubButton = styled(BaseButton)(
+  ({ theme }) => `
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  background-color: ${blueBtn[500]};
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: 1px solid ${blueBtn[500]};
+  box-shadow: 0 2px 1px ${
+    theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'
+  }, inset 0 1.5px 1px ${blueBtn[400]}, inset 0 -2px 1px ${blueBtn[600]};
+
+  &:hover {
+    background-color: ${blueBtn[600]};
+  }
+
+  &.${buttonClasses.active} {
+    background-color: ${blueBtn[700]};
+    box-shadow: none;
+    transform: scale(0.99);
+  }
+
+  &.${buttonClasses.focusVisible} {
+    box-shadow: 0 0 0 4px ${theme.palette.mode === 'dark' ? blueBtn[300] : blueBtn[200]};
+    outline: none;
+  }
+
+  &.${buttonClasses.disabled} {
+    background-color: ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+    color: ${theme.palette.mode === 'dark' ? grey[200] : grey[700]};
+    border: 0;
+    cursor: default;
+    box-shadow: none;
+    transform: scale(1);
+  }
+  `,
 );
