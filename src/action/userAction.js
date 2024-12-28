@@ -567,6 +567,7 @@ export const verifyOTP = createAsyncThunk(
     }
   }
 );
+
 export const stuVerifyOTP = createAsyncThunk(
   "student/verify/OTP",
   async (otp, { rejectWithValue }) => {
@@ -583,6 +584,43 @@ export const stuVerifyOTP = createAsyncThunk(
     }
   }
 );
+
+export const stuVerifyOTPEmail = createAsyncThunk(
+  "student/verify/emailOTP",
+  async (otp, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const { data } = await axiosInstance.post(
+        `/v1/student/verify/emailotp`,
+        { otp: otp },
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const stuVerifyOTPNumb = createAsyncThunk(
+  "student/verify/numbOTP",
+  async (otp, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const { data } = await axiosInstance.post(
+        `/v1/student/verify/numbotp`,
+        { otp: otp },
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+
+
+
 
 export const resetPassword = createAsyncThunk(
   "user/reset/password",

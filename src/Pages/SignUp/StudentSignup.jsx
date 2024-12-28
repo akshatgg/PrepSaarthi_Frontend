@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 import MetaData from "../../utils/Metadata";
 import CircularProgress from "@mui/material/CircularProgress";
 import imageCompression from "browser-image-compression";
-import { reset, stusendOTP,clearError as otpClearError, sturesendOTP, otpReset, stuVerifyOTP } from "../../action/userAction";
+import { reset, stusendOTP,clearError as otpClearError, sturesendOTP, otpReset, stuVerifyOTP, stusendOTPemail, stusendOTPnumb, stuVerifyOTPEmail, stuVerifyOTPNumb } from "../../action/userAction";
 import SendIcon from '@mui/icons-material/Send';
 import { InputAdornment } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -211,6 +211,20 @@ export default function StudentSignUp() {
     success: otpSuccess,
     sent
   } = useSelector((state) => state.newStuOTPsend);
+  // calling both numb and email function for send otp seperately
+  const {
+    error: otpEmailError,
+    loading: otpEmailLoading,
+    success: otpEmailSuccess,
+    emailsent
+  } = useSelector((state) => state.newStuOTPsendemail);
+  const {
+    error: otpNumbError,
+    loading: otpNumbLoading,
+    success: otpNumbSuccess,
+    numbsent
+  } = useSelector((state) => state.newStuOTPsendnumb);
+
   const {
     loading: reLoading,
     success: reSuccess,
@@ -328,6 +342,28 @@ export default function StudentSignUp() {
       dispatch(otpClearError())
     }
   }, [dispatch, otpError, otpSuccess])
+  //for email and otp
+  React.useEffect(() => {
+    if(otpEmailSuccess){
+      toast.success("OTP has been sent to your submitted email")
+      dispatch(reset())
+    }
+    if(otpEmailError){
+      toast.error(otpEmailError.message)
+      dispatch(otpClearError())
+    }
+  }, [dispatch, otpEmailError, otpEmailSuccess])
+  React.useEffect(() => {
+    if(otpNumbSuccess){
+      toast.success("OTP has been sent to your submitted Mobile number")
+      dispatch(reset())
+    }
+    if(otpNumbError){
+      toast.error(otpNumbError.message)
+      dispatch(otpClearError())
+    }
+  }, [dispatch, otpNumbError, otpNumbSuccess])
+
   React.useEffect(() => {
     if(reSuccess){
       toast.success("OTP has been resent")
@@ -395,7 +431,7 @@ export default function StudentSignUp() {
   <TextField
     required
     fullWidth
-    disabled={sent}
+    disabled={emailsent}
     onChange={handleChange}
     id="email"
     label="Email Address"
@@ -411,13 +447,13 @@ export default function StudentSignUp() {
               minWidth: "auto", // Remove the default minimum width of the button
             }}
             // loading={Gmailloading}
-            loading={otpLoading} 
+            loading={otpEmailLoading} 
             onClick={() => {
-              GmailhandleClick(); // Call the GmailhandleClick function
+              // GmailhandleClick(); 
+
               dispatch(
-                stusendOTP({
-                  email: studentInfo.email,
-                 
+                stusendOTPemail({
+                  email: studentInfo.email                
                 })
               );
             }}
@@ -430,9 +466,8 @@ export default function StudentSignUp() {
   />
 </Grid>
 
-                {GmailOTPBoxes &&(
-                 <>
-                 <Grid item xs={12}>
+              
+                 <Grid item xs={12} sx={emailsent ? {display:'block'} : {display:'none'}}>
                    <Stack direction="row" spacing={2} alignItems="center">
                      {/* OTP Input */}
                      <OTP 
@@ -450,7 +485,7 @@ export default function StudentSignUp() {
                      
                      {/* Verify Button */}
                      <SubButton onClick={()=>{
-                      dispatch(stuVerifyOTP(gmailOtp))
+                      dispatch(stuVerifyOTPEmail(gmailOtp))
                      }
 
                      }>Verify</SubButton>
@@ -460,22 +495,18 @@ export default function StudentSignUp() {
                   <LoadingButton 
                   loading={reLoading}
                   onClick={() => {
-                    dispatch(sturesendOTP({email: studentInfo.email,
+                    dispatch(sturesendOTP({email: studentInfo.email
                      }))
                   }}>Resend OTP</LoadingButton>
                 </Grid>
                  
                  
-               </>
-               
-                )
-                  
-                }         
-                <Grid item xs={12}>
+                      
+                <Grid item xs={12} >
       <TextField
         required
         onChange={handleChange}
-        disabled={sent}
+        disabled={numbsent}
         fullWidth
         id="phoneno"
         label="Mobile Number"
@@ -491,13 +522,12 @@ export default function StudentSignUp() {
                minWidth: "auto", // Remove the default minimum width of the button
                    }}
               // loading={Numbloading}
-              loading={otpLoading} 
+              loading={otpNumbLoading} 
                onClick={()=>{
-                NumbhandleClick();
+                // NumbhandleClick();
                 dispatch(
-                  stusendOTP({
-                    
-                    phoneNo: studentInfo.phoneNo,
+                  stusendOTPnumb({                   
+                    phoneNo: studentInfo.phoneNo
                   })
                 );
               }
@@ -510,8 +540,7 @@ export default function StudentSignUp() {
         }}
       />
                 </Grid>
-                {NumbOtpBoxes && (
-  <>
+
     {/* <Grid item xs={12}>
       <TextField
         required
@@ -523,7 +552,7 @@ export default function StudentSignUp() {
         onChange={handleChange}
       />
     </Grid> */}
-   <Grid item xs={12}>
+   <Grid item xs={12} sx={numbsent ? {display:'block'} : {display:'none'}}>
   <Stack direction="row" spacing={2} alignItems="center">
     {/* OTP Input */}
     <OTP 
@@ -541,7 +570,7 @@ export default function StudentSignUp() {
     {/* Button */}
     <SubButton 
     onClick={()=>{
-      dispatch(stuVerifyOTP(NumbOtp))
+      dispatch(stuVerifyOTPNumb(NumbOtp))
     }}
     >Verify</SubButton>
   </Stack>
@@ -554,8 +583,7 @@ export default function StudentSignUp() {
                   }}>Resend OTP</LoadingButton>
 </Grid>
 
-  </>
-)}
+
                
                 <Grid item xs={12}>
                   <TextField 
