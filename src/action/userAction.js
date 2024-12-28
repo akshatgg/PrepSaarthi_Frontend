@@ -473,6 +473,46 @@ export const stusendOTP = createAsyncThunk(
     }
   }
 );
+export const stusendOTPemail = createAsyncThunk(
+  "student/send/email/OTP",
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const payload = {};
+      if (email) payload.email = email;
+      
+
+      const { data } = await axiosInstance.post(
+        `/v1/student/send/email/otp`,
+        payload,
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const stusendOTPnumb = createAsyncThunk(
+  "student/send/OTP",
+  async ({ email, mobileNumber }, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const payload = {};
+      if (email) payload.email = email;
+      if (mobileNumber) payload.mobileNumber = mobileNumber;
+
+      const { data } = await axiosInstance.post(
+        `/v1/student/send/otp`,
+        payload,
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 
 export const resendOTP = createAsyncThunk(
