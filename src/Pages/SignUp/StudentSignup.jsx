@@ -216,13 +216,13 @@ export default function StudentSignUp() {
     error: otpEmailError,
     loading: otpEmailLoading,
     success: otpEmailSuccess,
-    emailsent
+    sent:emailsent
   } = useSelector((state) => state.newStuOTPsendemail);
   const {
     error: otpNumbError,
     loading: otpNumbLoading,
     success: otpNumbSuccess,
-    numbsent
+    sent:numbsent
   } = useSelector((state) => state.newStuOTPsendnumb);
 
   const {
@@ -344,6 +344,7 @@ export default function StudentSignUp() {
   }, [dispatch, otpError, otpSuccess])
   //for email and otp
   React.useEffect(() => {
+    
     if(otpEmailSuccess){
       toast.success("OTP has been sent to your submitted email")
       dispatch(reset())
