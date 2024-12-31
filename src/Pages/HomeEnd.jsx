@@ -89,7 +89,7 @@ const HomeEnd = () => {
                     onClick={() => {
                       toggleAnwser(i);
                     }}
-                    data-aos="zoom-in-right"
+                   
                   >
                     <div>
                       <span>{item.question}</span>
@@ -114,7 +114,7 @@ const HomeEnd = () => {
                     onClick={() => {
                       toggleAnwser(i);
                     }}
-                    data-aos="zoom-in-left"
+                    
                   >
                     <div>
                       <span>{item.question}</span>

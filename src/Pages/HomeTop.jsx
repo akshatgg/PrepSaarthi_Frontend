@@ -23,10 +23,10 @@ const HomeTop = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000, // Animation duration in milliseconds
-      
-    
+      once: true, // Animation will only run once
     });
   }, []);
+  
 
   const HomeTopSecond = [
     {
@@ -259,9 +259,12 @@ const HomeTop = () => {
           </Button> */}
 
           
-
-          <LineButton onClick={handleOpenJoin}/>
-          
+        <Box onClick={handleOpenJoin} display={"flex"}
+          alignSelf={"center"}
+          component={Link}>
+           
+          <LineButton />
+          </Box>
           <Modal
             open={openJoin}
             onClose={handleCloseJoin}
