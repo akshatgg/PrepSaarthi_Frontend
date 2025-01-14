@@ -46,6 +46,24 @@ const App = () => {
   const [soundEnabled, setSoundEnabled] = useState(false); // Control sound permissions
   const sound = new Audio(notificationSound); 
   
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/v1/health`);
+        const data = await response.json();
+        console.log(data.message);
+        console.log("gdgdgd");
+        
+      } catch (error) {
+        console.error('Error connecting to backend:', error);
+      }
+    };
+    console.log("hii");
+    
+    checkBackend();
+  }, []);
+  
+
   let socket = useMemo(
     () =>
       io(import.meta.env.VITE_API_URL, {
@@ -53,7 +71,9 @@ const App = () => {
          }),
       []
     );
-
+    socket.on("connect", () => {
+      console.log("Connected to the server:", socket.id);
+    });
   const { user, error } = useSelector((state) => state.mentor);
   const { user:stuUser ,error: stuError } = useSelector((state) => state.student);
   
