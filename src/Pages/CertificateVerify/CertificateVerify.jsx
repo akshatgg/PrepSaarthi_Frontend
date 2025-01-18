@@ -1,4 +1,4 @@
-//   const response = await axios.post(`${process.env.REACT_APP_API_URL}/v1/verify/certificate`, {
+//   const response = await axios.post(`${process.env.VITE_API_URL}/v1/verify/certificate`, {
     import React, { useState, useEffect } from 'react';
     import axios from 'axios';
     import { useSearchParams } from 'react-router-dom';
