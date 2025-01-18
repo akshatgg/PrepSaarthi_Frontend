@@ -6,11 +6,7 @@ function TrackPageView() {
   useEffect(() => {
     const sendPageViewCount = async () => {
       try {
-<<<<<<< Updated upstream
         await fetch(`${import.meta.env.VITE_API_URL}/v1/api/update-counts`, {
-=======
-        await fetch(`${process.env.VITE_API_URL}/v1/api/update-counts`, {
->>>>>>> Stashed changes
           method: "POST",
           headers: {
             "Content-Type": "application/json",
