@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 import MetaData from "../../utils/Metadata";
 import CircularProgress from "@mui/material/CircularProgress";
 import imageCompression from "browser-image-compression";
-import { reset, stusendOTP,clearError as otpClearError, sturesendOTP, otpReset, stuVerifyOTP, stusendOTPemail, stusendOTPnumb, stuVerifyOTPEmail, stuVerifyOTPNumb } from "../../action/userAction";
+import { reset, stusendOTP, clearError as otpClearError, sturesendOTP, otpReset, stuVerifyOTP, stusendOTPemail, stusendOTPnumb, stuVerifyOTPEmail, stuVerifyOTPNumb } from "../../action/userAction";
 import SendIcon from '@mui/icons-material/Send';
 import { InputAdornment } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -216,13 +216,13 @@ export default function StudentSignUp() {
     error: otpEmailError,
     loading: otpEmailLoading,
     success: otpEmailSuccess,
-    sent:emailsent
+    sent: emailsent
   } = useSelector((state) => state.newStuOTPsendemail);
   const {
     error: otpNumbError,
     loading: otpNumbLoading,
     success: otpNumbSuccess,
-    sent:numbsent
+    sent: numbsent
   } = useSelector((state) => state.newStuOTPsendnumb);
 
   const {
@@ -236,26 +236,26 @@ export default function StudentSignUp() {
   //loading
 
   const [Numbloading, NumbsetLoading] = React.useState(false);
-  const [NumbOtpBoxes, setNumbOtpBoxes] =React.useState(false);
+  const [NumbOtpBoxes, setNumbOtpBoxes] = React.useState(false);
   const [NumbOtp, setNumbOtp] = React.useState('');
   function NumbhandleClick() {
     NumbsetLoading(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       NumbsetLoading(false);
       setNumbOtpBoxes(true);
 
-    },1000)
+    }, 1000)
   }
   const [Gmailloading, GmailsetLoading] = React.useState(false);
   const [GmailOTPBoxes, setGmailOTPBoxes] = React.useState(false);
   const [gmailOtp, setgmailOtp] = React.useState('');
   function GmailhandleClick() {
     GmailsetLoading(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       GmailsetLoading(false);
       setGmailOTPBoxes(true);
-    },1000)
-  
+    }, 1000)
+
   }
   const navigate = useNavigate();
   const [studentInfo, setstudentInfo] = React.useState({});
@@ -285,18 +285,29 @@ export default function StudentSignUp() {
   const [prgress, setProgress] = React.useState(0);
   const [success, setSuccess] = React.useState(false);
   const [uploading, setuploading] = React.useState(false);
+
+  {/* Adding Password Validation By Rajendra Jat */}
   
+  const [passwordCriteria, setPasswordCriteria] = React.useState({
+    minLength: false,
+    uppercase: false,
+    number: false,
+    specialChar: false,
+  }); //Password Hint
+
+
   React.useEffect(() => {
-    if(prgress === 100)
-      {setSuccess(true)
+    if (prgress === 100) {
+      setSuccess(true)
       setTimeout(() => {
-        
-    setProgress(0)
+
+        setProgress(0)
       }, 800);
       setTimeout(() => {
         setSuccess(false)
-      }, 1200);}
-  }, [prgress ])
+      }, 1200);
+    }
+  }, [prgress])
 
   const handleChange = async (event) => {
     if (event.target.name === "avatar") {
@@ -320,7 +331,7 @@ export default function StudentSignUp() {
         const base64img = await convertBase64(compressedFile);
         setuploading(false)
         setAvatar(base64img);
-            setAvatarPreview(base64img);
+        setAvatarPreview(base64img);
       } catch (error) {
         setuploading(false)
         toast.error(error.message)
@@ -331,46 +342,62 @@ export default function StudentSignUp() {
         [event.target.name]: event.target.value,
       });
     }
+
+    {/* Adding Password Validation By Rajendra Jat */}
+    if (event.target.name === "password") {
+      const password = event.target.value;
+      setPasswordCriteria({
+        minLength: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        number: /[0-9]/.test(password),
+        specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+      });
+    }
+
+    setstudentInfo({
+      ...studentInfo,
+      [event.target.name]: event.target.value,
+    });
   };
   React.useEffect(() => {
-    if(otpSuccess){
+    if (otpSuccess) {
       toast.success("OTP has been sent to your submitted email and mobile number")
       dispatch(reset())
     }
-    if(otpError){
+    if (otpError) {
       toast.error(otpError.message)
       dispatch(otpClearError())
     }
   }, [dispatch, otpError, otpSuccess])
   //for email and otp
   React.useEffect(() => {
-    
-    if(otpEmailSuccess){
+
+    if (otpEmailSuccess) {
       toast.success("OTP has been sent to your submitted email")
       dispatch(reset())
     }
-    if(otpEmailError){
+    if (otpEmailError) {
       toast.error(otpEmailError.message)
       dispatch(otpClearError())
     }
   }, [dispatch, otpEmailError, otpEmailSuccess])
   React.useEffect(() => {
-    if(otpNumbSuccess){
+    if (otpNumbSuccess) {
       toast.success("OTP has been sent to your submitted Mobile number")
       dispatch(reset())
     }
-    if(otpNumbError){
+    if (otpNumbError) {
       toast.error(otpNumbError.message)
       dispatch(otpClearError())
     }
   }, [dispatch, otpNumbError, otpNumbSuccess])
 
   React.useEffect(() => {
-    if(reSuccess){
+    if (reSuccess) {
       toast.success("OTP has been resent")
       dispatch(reset())
     }
-    if(reError){
+    if (reError) {
       toast.error(reError.message)
       dispatch(otpClearError())
     }
@@ -429,120 +456,121 @@ export default function StudentSignUp() {
                 </Grid>
 
                 <Grid item xs={12}>
-  <TextField
-    required
-    fullWidth
-    disabled={emailsent}
-    onChange={handleChange}
-    id="email"
-    label="Email Address"
-    name="email"
-    autoComplete="email"
-    InputProps={{
-      endAdornment: (
-        <InputAdornment position="end">
-          <LoadingButton
-            variant="contained"
-            sx={{
-              padding: "4px 10px", // Adjust the padding as needed
-              minWidth: "auto", // Remove the default minimum width of the button
-            }}
-            // loading={Gmailloading}
-            loading={otpEmailLoading} 
-            onClick={() => {
-              // GmailhandleClick(); 
+                  <TextField
+                    required
+                    fullWidth
+                    disabled={emailsent}
+                    onChange={handleChange}
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LoadingButton
+                            variant="contained"
+                            sx={{
+                              padding: "4px 10px", // Adjust the padding as needed
+                              minWidth: "auto", // Remove the default minimum width of the button
+                            }}
+                            // loading={Gmailloading}
+                            loading={otpEmailLoading}
+                            onClick={() => {
+                              // GmailhandleClick(); 
 
-              dispatch(
-                stusendOTPemail({
-                  email: studentInfo.email                
-                })
-              );
-            }}
-          >
-            <SendIcon />
-          </LoadingButton>
-        </InputAdornment>
-      ),
-    }}
-  />
-</Grid>
+                              dispatch(
+                                stusendOTPemail({
+                                  email: studentInfo.email
+                                })
+                              );
+                            }}
+                          >
+                            <SendIcon />
+                          </LoadingButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
 
-              
-                 <Grid item xs={12} sx={emailsent ? {display:'block'} : {display:'none'}}>
-                   <Stack direction="row" spacing={2} alignItems="center">
-                     {/* OTP Input */}
-                     <OTP 
-                     name="emailOTP"
-                     id="emailOTP"
-                     autoComplete="emailOTP"
-                       separator={<span>-</span>} 
-                       value={gmailOtp} 
-                       onChange={(otp)=>{
-                         handleChange();
+
+                <Grid item xs={12} sx={emailsent ? { display: 'block' } : { display: 'none' }}>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    {/* OTP Input */}
+                    <OTP
+                      name="emailOTP"
+                      id="emailOTP"
+                      autoComplete="emailOTP"
+                      separator={<span>-</span>}
+                      value={gmailOtp}
+                      onChange={(otp) => {
+                        handleChange();
                         setgmailOtp(otp)
-                       }} 
-                       length={5} 
-                     />    
-                     
-                     {/* Verify Button */}
-                     <SubButton onClick={()=>{
+                      }}
+                      length={5}
+                    />
+
+                    {/* Verify Button */}
+                    <SubButton onClick={() => {
                       dispatch(stuVerifyOTPEmail(gmailOtp))
-                     }
+                    }
 
-                     }>Verify</SubButton>
-                   </Stack>
-                  
-                  
-                  <LoadingButton 
-                  loading={reLoading}
-                  onClick={() => {
-                    dispatch(sturesendOTP({email: studentInfo.email
-                     }))
-                  }}>Resend OTP</LoadingButton>
+                    }>Verify</SubButton>
+                  </Stack>
+
+
+                  <LoadingButton
+                    loading={reLoading}
+                    onClick={() => {
+                      dispatch(sturesendOTP({
+                        email: studentInfo.email
+                      }))
+                    }}>Resend OTP</LoadingButton>
                 </Grid>
-                 
-                 
-                      
+
+
+
                 <Grid item xs={12} >
-      <TextField
-        required
-        onChange={handleChange}
-        disabled={numbsent}
-        fullWidth
-        id="phoneno"
-        label="Mobile Number"
-        name="phoneNo"
-        autoComplete="number"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-            <LoadingButton 
-            variant="contained" 
-              sx={{
-               padding: "4px 10px", // Adjust the padding as needed
-               minWidth: "auto", // Remove the default minimum width of the button
-                   }}
-              // loading={Numbloading}
-              loading={otpNumbLoading} 
-               onClick={()=>{
-                // NumbhandleClick();
-                dispatch(
-                  stusendOTPnumb({                   
-                    phoneNo: studentInfo.phoneNo
-                  })
-                );
-              }
-                }>
-             <SendIcon/>
-          </LoadingButton>
+                  <TextField
+                    required
+                    onChange={handleChange}
+                    disabled={numbsent}
+                    fullWidth
+                    id="phoneno"
+                    label="Mobile Number"
+                    name="phoneNo"
+                    autoComplete="number"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <LoadingButton
+                            variant="contained"
+                            sx={{
+                              padding: "4px 10px", // Adjust the padding as needed
+                              minWidth: "auto", // Remove the default minimum width of the button
+                            }}
+                            // loading={Numbloading}
+                            loading={otpNumbLoading}
+                            onClick={() => {
+                              // NumbhandleClick();
+                              dispatch(
+                                stusendOTPnumb({
+                                  phoneNo: studentInfo.phoneNo
+                                })
+                              );
+                            }
+                            }>
+                            <SendIcon />
+                          </LoadingButton>
 
-       </InputAdornment>
-          ),
-        }}
-      />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
                 </Grid>
 
-    {/* <Grid item xs={12}>
+                {/* <Grid item xs={12}>
       <TextField
         required
         fullWidth
@@ -553,41 +581,41 @@ export default function StudentSignUp() {
         onChange={handleChange}
       />
     </Grid> */}
-   <Grid item xs={12} sx={numbsent ? {display:'block'} : {display:'none'}}>
-  <Stack direction="row" spacing={2} alignItems="center">
-    {/* OTP Input */}
-    <OTP 
-    id="numberOTP"
-     name="numberOTP"
-      separator={<span>-</span>} 
-      value={NumbOtp} 
-      onChange={(otp)=>{
-        handleChange();
-        setNumbOtp(otp)
-      }} 
-      length={5} 
-    />    
+                <Grid item xs={12} sx={numbsent ? { display: 'block' } : { display: 'none' }}>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    {/* OTP Input */}
+                    <OTP
+                      id="numberOTP"
+                      name="numberOTP"
+                      separator={<span>-</span>}
+                      value={NumbOtp}
+                      onChange={(otp) => {
+                        handleChange();
+                        setNumbOtp(otp)
+                      }}
+                      length={5}
+                    />
 
-    {/* Button */}
-    <SubButton 
-    onClick={()=>{
-      dispatch(stuVerifyOTPNumb(NumbOtp))
-    }}
-    >Verify</SubButton>
-  </Stack>
-  <LoadingButton 
-                  loading={reLoading}
-                  onClick={() => {
-                    dispatch(sturesendOTP({
-                      mobileNumber: studentInfo.phoneNo
-                     }))
-                  }}>Resend OTP</LoadingButton>
-</Grid>
+                    {/* Button */}
+                    <SubButton
+                      onClick={() => {
+                        dispatch(stuVerifyOTPNumb(NumbOtp))
+                      }}
+                    >Verify</SubButton>
+                  </Stack>
+                  <LoadingButton
+                    loading={reLoading}
+                    onClick={() => {
+                      dispatch(sturesendOTP({
+                        mobileNumber: studentInfo.phoneNo
+                      }))
+                    }}>Resend OTP</LoadingButton>
+                </Grid>
 
 
-               
+
                 <Grid item xs={12}>
-                  <TextField 
+                  <TextField
                     required
                     fullWidth
                     onChange={handleChange}
@@ -595,11 +623,63 @@ export default function StudentSignUp() {
                     label="Password"
                     type="password"
                     id="password"
-                    autoComplete="new-password" 
+                    autoComplete="new-password"
                   />
                 </Grid>
+
+                {/* Adding Password Validation By Rajendra Jat */}
                 <Grid item xs={12}>
-                <Box display="flex" alignItems="center">
+                  <Box sx={{ mt: 1 }}>
+                    <Typography variant="subtitle1">Password must include:</Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: passwordCriteria.minLength ? "green" : "red",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <span>{passwordCriteria.minLength ? "✔" : "✖"}</span> Minimum 8 characters
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: passwordCriteria.uppercase ? "green" : "red",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <span>{passwordCriteria.uppercase ? "✔" : "✖"}</span> At least one uppercase letter
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: passwordCriteria.number ? "green" : "red",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <span>{passwordCriteria.number ? "✔" : "✖"}</span> At least one number
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: passwordCriteria.specialChar ? "green" : "red",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <span>{passwordCriteria.specialChar ? "✔" : "✖"}</span> At least one special character
+                    </Typography>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box display="flex" alignItems="center">
                     <Box
                       sx={{
                         position: "relative",
@@ -614,14 +694,14 @@ export default function StudentSignUp() {
                           position: "absolute",
                           top: "5.18px",
                           left: "5px",
-                          display:"none"
-                        }:{
+                          display: "none"
+                        } : {
                           position: "absolute",
                           top: "5.18px",
                           left: "5px",
                         }}
                       />
-                      <div class="success-animation" style={success? {display:'block'} : {display:'none'}}>
+                      <div class="success-animation" style={success ? { display: 'block' } : { display: 'none' }}>
                         <svg
                           class="checkmark"
                           xmlns="http://www.w3.org/2000/svg"
@@ -670,34 +750,34 @@ export default function StudentSignUp() {
                     </Button>
                   </Box>
                   <Grid item xs={12}>
-                  <LoadingButton
-                    // loading={otpLoading}
-                    // onClick={() => {
-                    //   dispatch(
-                    //     stusendOTP({
-                    //       email: studentInfo.email,
-                    //       mobileNumber: studentInfo.phoneNo,
-                    //     })
-                    //   );
-                    // }}
-                    fullWidth
-                    loading={loading}
-                    disabled={uploading}
-                    sx={!sent ? {
-                      display:'block',
-                      mt: 3,
-                      mb: 2,
-                      color:'white',
-                      p: "0.8vmax 0",
-                      fontSize: { xs: "2.3vmax", md: "2vmax", lg: "1.1vmax" },
-                      bgcolor: "var(--button1)",
-                      "&:hover": { backgroundColor: "var(--button1Hover)" },
-                    } : {display:"none"}}
-                  >
-                   Sign Up
-                  </LoadingButton>
-                </Grid>
-                {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
+                    <LoadingButton
+                      // loading={otpLoading}
+                      // onClick={() => {
+                      //   dispatch(
+                      //     stusendOTP({
+                      //       email: studentInfo.email,
+                      //       mobileNumber: studentInfo.phoneNo,
+                      //     })
+                      //   );
+                      // }}
+                      fullWidth
+                      loading={loading}
+                      disabled={uploading}
+                      sx={!sent ? {
+                        display: 'block',
+                        mt: 3,
+                        mb: 2,
+                        color: 'white',
+                        p: "0.8vmax 0",
+                        fontSize: { xs: "2.3vmax", md: "2vmax", lg: "1.1vmax" },
+                        bgcolor: "var(--button1)",
+                        "&:hover": { backgroundColor: "var(--button1Hover)" },
+                      } : { display: "none" }}
+                    >
+                      Sign Up
+                    </LoadingButton>
+                  </Grid>
+                  {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <TextField
                     required
                     fullWidth
@@ -708,7 +788,7 @@ export default function StudentSignUp() {
                     onChange={handleChange}
                   />
                 </Grid> */}
-                    
+
                 </Grid>
                 {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <Typography variant="p">
@@ -735,9 +815,9 @@ export default function StudentSignUp() {
                 Sign Up
               </LoadingButton>
                 </Grid> */}
-               
+
               </Grid>
-              
+
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link to="/login" variant="body2">
@@ -751,7 +831,7 @@ export default function StudentSignUp() {
       </ThemeProvider>
     </>
   );
-} 
+}
 
 
 
@@ -799,9 +879,8 @@ const InputElement = styled('input')(
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  box-shadow: 0 2px 4px ${
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
-  };
+  box-shadow: 0 2px 4px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
+    };
 
   &:hover {
     border-color: ${blue[400]};
@@ -832,9 +911,8 @@ const SubButton = styled(BaseButton)(
   transition: all 150ms ease;
   cursor: pointer;
   border: 1px solid ${blueBtn[500]};
-  box-shadow: 0 2px 1px ${
-    theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'
-  }, inset 0 1.5px 1px ${blueBtn[400]}, inset 0 -2px 1px ${blueBtn[600]};
+  box-shadow: 0 2px 1px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'
+    }, inset 0 1.5px 1px ${blueBtn[400]}, inset 0 -2px 1px ${blueBtn[600]};
 
   &:hover {
     background-color: ${blueBtn[600]};
