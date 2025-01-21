@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -286,14 +287,35 @@ export default function StudentSignUp() {
   const [success, setSuccess] = React.useState(false);
   const [uploading, setuploading] = React.useState(false);
 
-  {/* Adding Password Validation By Rajendra Jat */}
-  
+  {/* Adding Password Validation By Rajendra Jat */ }
+
   const [passwordCriteria, setPasswordCriteria] = React.useState({
     minLength: false,
     uppercase: false,
     number: false,
     specialChar: false,
   }); //Password Hint
+  const [password, setPassword] = useState("");
+  const [isHintVisible, setIsHintVisible] = useState(false);
+
+  // Validation rules
+  const validationRules = [
+    { regex: /.{8,}/, message: "At least 8 characters" },
+    { regex: /[A-Z]/, message: "At least one uppercase letter" },
+    { regex: /[a-z]/, message: "At least one lowercase letter" },
+    { regex: /\d/, message: "At least one digit" },
+    { regex: /[@$!%*?&]/, message: "At least one special character (@, $, !, %, *, ?, &)" },
+  ];
+
+  // Check which rules are satisfied
+  const checkValidationRules = () => {
+    return validationRules.map((rule) => ({
+      ...rule,
+      isSatisfied: rule.regex.test(password),
+    }));
+  };
+
+  const validationResults = checkValidationRules();
 
 
   React.useEffect(() => {
@@ -343,15 +365,16 @@ export default function StudentSignUp() {
       });
     }
 
-    {/* Adding Password Validation By Rajendra Jat */}
+    {/* Adding Password Validation By Rajendra Jat */ }
     if (event.target.name === "password") {
-      const password = event.target.value;
-      setPasswordCriteria({
-        minLength: password.length >= 8,
-        uppercase: /[A-Z]/.test(password),
-        number: /[0-9]/.test(password),
-        specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-      });
+      setPassword(event.target.value);
+      // const password = event.target.value;
+      // setPasswordCriteria({
+      //   minLength: password.length >= 8,
+      //   uppercase: /[A-Z]/.test(password),
+      //   number: /[0-9]/.test(password),
+      //   specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+      // });
     }
 
     setstudentInfo({
@@ -624,11 +647,13 @@ export default function StudentSignUp() {
                     type="password"
                     id="password"
                     autoComplete="new-password"
+                    onFocus={() => setIsHintVisible(true)}
+                    onBlur={() => setIsHintVisible(false)}
                   />
                 </Grid>
 
                 {/* Adding Password Validation By Rajendra Jat */}
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Box sx={{ mt: 1 }}>
                     <Typography variant="subtitle1">Password must include:</Typography>
                     <Typography
@@ -676,7 +701,25 @@ export default function StudentSignUp() {
                       <span>{passwordCriteria.specialChar ? "✔" : "✖"}</span> At least one special character
                     </Typography>
                   </Box>
-                </Grid>
+                </Grid> */}
+
+                {isHintVisible && (
+                  <div className="password-hint" style={{paddingTop:"5px", paddingLeft:"16px"}}>
+                    <p>Password must meet the following criteria:</p>
+                    <ul>
+                      {validationResults.map((rule, index) => (
+                        <li
+                          key={index}
+                          style={{
+                            color: rule.isSatisfied ? "green" : "red",
+                          }}
+                        >
+                          {rule.isSatisfied ? "✔" : "✖"} {rule.message}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 <Grid item xs={12}>
                   <Box display="flex" alignItems="center">
