@@ -103,7 +103,7 @@ const ConfirmMentorShipPayment = ({ item, sub, stu }) => {
         description: `Subscrption for ${item.name}'s mentorship`,
         image: Logo,
         order_id: order.id,
-        callback_url: `${process.env.REACT_APP_API_URL}/v1/paymentVerification?id=${item.id}&price=${sub.price}&duration=${duration}`,
+        callback_url: `${import.meta.env.VITE_API_URL}/v1/paymentVerification?id=${item.id}&price=${sub.price}&duration=${duration}`,
         prefill: {
            name: stu.name,
             email: stu.email,

@@ -34,7 +34,7 @@
     
         try {
           // Make an Axios POST request to the backend
-          const response = await axios.post(`${process.env.REACT_APP_API_URL}/v1/verify/certificate`, {
+          const response = await axios.post(`${import.meta.env.VITE_API_URL}/v1/verify/certificate`, {
             cid: certificateID, // Payload sent in the body
           });
     
