@@ -12,13 +12,15 @@ import Logo from "./logoMobile.png";
 import { clearError } from "../../action/userAction";
 import toast from "react-hot-toast";
 import LoadingButton from "@mui/lab/LoadingButton";
+
 import {
   paymentInitator,
   // paymentInitatorSub,
   reset,
 } from "../../action/paymentAction";
 import MetaData from "../../utils/Metadata";
-const ConfirmMentorShipPayment = ({ item, sub, stu }) => {
+import SplitButton from "../../Components/SplitButton/SplitButton";
+const  ConfirmMentorShipPayment = ({ item, sub, stu }) => {
   const dispatch = useDispatch();
   useEffect(() => {}, []);
   const {
@@ -259,6 +261,8 @@ const ConfirmMentorShipPayment = ({ item, sub, stu }) => {
             </LoadingButton>
           )}
         </Box>
+
+      <SplitButton/>
       </Box>
     </>
   );

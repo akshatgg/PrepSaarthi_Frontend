@@ -393,48 +393,49 @@ const MentorProfile = () => {
                       </Typography>
                       {(isAuthenticated || menAuth) &&
                       !stuUser?.user?.mentorAssigned ? (
-                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                        <Box sx={{ display: "flex", flexDirection: "row"  ,alignItems: "center", }}>
+    
                           <Button
                             variant="outlined"
                             sx={{ width: { xs: "18vmax", md: "12vmax" } }}
-                            onClick={() => {
-                              if (
-                                isAuthenticated &&
-                                !(user?.activeMentee >= 3)
-                              ) {
-                                setShowPage(true);
-                                setSubscription({
-                                  type: "daily",
-                                  api: "xyz",
-                                  price: user?.ppd,
-                                });
-                              } else if (
-                                mentor?.user?.signedUpFor === "mentor"
-                              ) {
-                                toast.error("Mentors Can't Buy Mentorship");
-                              } else if (user?.activeMentee >=3) {
-                                toast(
-                                  `Oops! ${
-                                    user?.name?.split(" ")[0]
-                                  } is busy with other mentees. Try again later or explore other mentorships!`,
-                                  {
-                                    id: "month",
+                            // onClick={() => {
+                            //   if (
+                            //     isAuthenticated &&
+                            //     !(user?.activeMentee >= 3)
+                            //   ) {
+                            //     setShowPage(true);
+                            //     setSubscription({
+                            //       type: "daily",
+                            //       api: "xyz",
+                            //       price: user?.ppd,
+                            //     });
+                            //   } else if (
+                            //     mentor?.user?.signedUpFor === "mentor"
+                            //   ) {
+                            //     toast.error("Mentors Can't Buy Mentorship");
+                            //   } else if (user?.activeMentee >=3) {
+                            //     toast(
+                            //       `Oops! ${
+                            //         user?.name?.split(" ")[0]
+                            //       } is busy with other mentees. Try again later or explore other mentorships!`,
+                            //       {
+                            //         id: "month",
 
-                                    icon: (
-                                      <EventAvailableIcon
-                                        sx={{ color: "var(--button2)" }}
-                                      />
-                                    ),
-                                  }
-                                );
-                              } else {
-                                toast(" Login To Buy Your Mentorship");
-                                navigate("/login");
-                              }
-                            }}
+                            //         icon: (
+                            //           <EventAvailableIcon
+                            //             sx={{ color: "var(--button2)" }}
+                            //           />
+                            //         ),
+                            //       }
+                            //     );
+                            //   } else {
+                            //     toast(" Login To Buy Your Mentorship");
+                            //     navigate("/login");
+                            //   }
+                            // }}
                           >
-                            &#8377;
-                            {Intl.NumberFormat("en-IN").format(user?.ppd)}/week
+                          
+                            Features
                           </Button>
                           <Button
                             variant="contained"
@@ -481,6 +482,27 @@ const MentorProfile = () => {
                             &#8377;
                             {Intl.NumberFormat("en-IN").format(user?.ppm)}/month
                           </Button>
+
+
+                        
+                          
+                          {isAuthenticated && <>
+                      <Button
+                       sx={{
+                        backgroundColor: "var(--button1)",
+                        color: "#fff",
+                        "&:hover": {
+                          backgroundColor: "var(--button1Hover)",
+                        },
+                        width: { xs: "18vmax", md: "12vmax" },
+                        ml: "1vmax",
+                        mt: 0,
+                      }}
+                      onClick={() => {
+                            navigate('/chat', { state: { reciverId: id, name:user?.name, avatar:user?.avatar?.public_URI } });
+
+                      }}>Chat with {user?.name?.split(" ")[0]}</Button>
+                     </>}
                         </Box>
                       ) : (
                         (isAuthenticated || menAuth) && (
@@ -493,24 +515,7 @@ const MentorProfile = () => {
                           </Typography>
                         )
                       )}
-                     {isAuthenticated && <>
-                      <Button
-                       sx={{
-                        backgroundColor: "var(--button1)",
-                        color: "#fff",
-                        "&:hover": {
-                          backgroundColor: "var(--button1Hover)",
-                        },
-                        mt:{
-                          xs:'20px',
-                          md:0
-                        }
-                      }}
-                      onClick={() => {
-                            navigate('/chat', { state: { reciverId: id, name:user?.name, avatar:user?.avatar?.public_URI } });
-
-                      }}>Chat with {user?.name?.split(" ")[0]}</Button>
-                     </>}
+                     
                     </Box>
                     {isAuthenticated || menAuth ? (
                       <>
