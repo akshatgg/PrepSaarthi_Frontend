@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5050,
+
     proxy: {
       '/socket.io': {
         target: 'http://localhost:5050',
@@ -12,6 +13,7 @@ export default defineConfig({
         ws: true,
       },
     },
+
     watch: {
       usePolling: true, // Disable polling unless necessary
     },
