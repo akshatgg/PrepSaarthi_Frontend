@@ -49,7 +49,7 @@ import ConfirmMentorShipPayment from "../ConfirmMentorShipPayment/ConfirmMentorS
 import MetaData from "../../utils/Metadata";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 
-const options = ['1 month', '2 month', '3 month'];
+const options = ['1 month', '3 month', '6 month'];
 
 const MentorProfile = () => {
 
@@ -561,13 +561,49 @@ const [openBtn, setOpenBtn] = React.useState(false);
             isAuthenticated &&
             !(user?.activeMentee >= 3)
           ) {
-            setShowPage(true);
-            setSubscription({
-              type: "weekly",
-              api: "xyz",
-              price: user?.ppm,
-            });
-          } else if (
+            console.log("hi");
+              if( options[selectedIndex] == "1 month"){
+                setShowPage(true);
+                setSubscription({
+                  type: "weekly",
+                  api: "xyz",
+                  price: user?.ppm,
+                  
+                });               
+              }
+              else if(options[selectedIndex] == "3 month"){
+                setShowPage(true);
+                setSubscription({
+                  type: "weekly",
+                  api: "xyz",
+                  price: (() => {
+                    const basePrice = user?.ppm || 0; // Get ppm value, default to 0 if undefined
+                    const multipliedValue = basePrice * 3; // Multiply by 3
+                    const discount = multipliedValue * 0.03; // Calculate 1% discount
+                    console.log("Calculated Price:", finalPrice);
+                    return multipliedValue - discount; // Subtract discount and return the final price
+                  })(),
+                });  
+                console.log("hi");
+              }
+
+              else if(options[selectedIndex] == "6 month"){
+                setShowPage(true);
+                setSubscription({
+                  type: "weekly",
+                  api: "xyz",
+                  price: (() => {
+                    const basePrice = user?.ppm || 0; // Get ppm value, default to 0 if undefined
+                    const multipliedValue = basePrice * 6; // Multiply by 3
+                    const discount = multipliedValue * 0.06; // Calculate 1% discount
+                    console.log("Calculated Price:", finalPrice);
+                    return multipliedValue - discount; // Subtract discount and return the final price
+                  })(),
+                });  
+                console.log("hi");
+              }
+          } 
+          else if (
             mentor?.user?.signedUpFor === "mentor"
           ) {
             toast.error("Mentors Can't Buy Mentorship");
@@ -593,7 +629,10 @@ const [openBtn, setOpenBtn] = React.useState(false);
         }
       }
 
-        >{options[selectedIndex]}</Button>
+        >
+          {/* {options[selectedIndex]}   */}
+          &#8377;{Intl.NumberFormat("en-IN").format(user?.ppm)}/month
+        </Button>
         <Button
           aria-controls={openBtn ? 'split-button-menu' : undefined}
           aria-expanded={openBtn ? 'true' : undefined}
@@ -634,7 +673,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
           </MenuItem>
         ))}
       </Menu>
-    </React.Fragment>
+                          </React.Fragment>
 
 
                         
