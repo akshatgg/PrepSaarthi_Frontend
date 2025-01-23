@@ -262,7 +262,7 @@ const  ConfirmMentorShipPayment = ({ item, sub, stu }) => {
           )}
         </Box>
 
-      <SplitButton/>
+      
       </Box>
     </>
   );

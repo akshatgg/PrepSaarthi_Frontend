@@ -34,12 +34,58 @@ import {
   clearError,
   getSuccessMentorConnection,
 } from "../../action/metorListAction";
+
+
+
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+
 import toast from "react-hot-toast";
 import RatingMentor from "./RatingMentor";
 import ConfirmMentorShipPayment from "../ConfirmMentorShipPayment/ConfirmMentorShipPayment";
 import MetaData from "../../utils/Metadata";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+
+const options = ['1 month', '2 month', '3 month'];
+
 const MentorProfile = () => {
+
+
+
+
+const [openBtn, setOpenBtn] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleClick = () => {
+    console.info(`You clicked ${options[selectedIndex]}`);
+  };
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setOpenBtn(false);
+  };
+
+  const handleToggle = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpenBtn((prevOpen) => !prevOpen);
+  };
+
+  const handleCloseBtn = (event) => {
+    if (anchorEl && anchorEl.contains(event.target)) {
+      return;
+    }
+    setOpenBtn(false);
+  };
+
+
+
+
+
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const { error, loading, user } = useSelector((state) => state.mentorDeatil);
@@ -482,6 +528,113 @@ const MentorProfile = () => {
                             &#8377;
                             {Intl.NumberFormat("en-IN").format(user?.ppm)}/month
                           </Button>
+
+
+
+
+
+
+                          <React.Fragment>
+      <ButtonGroup
+        variant="contained"
+        aria-label="Button group with a nested menu"
+        sx={{
+          display: 'flex',
+          '& .MuiButton-root:first-of-type': {
+            flexGrow: 1, // Make the main button take more space
+           
+            width: { xs: "18vmax", md: "10vmax" },
+          
+          },
+          '& .MuiButton-root:last-of-type': {
+            flexGrow: 0.3, // Allocate smaller space to the arrow button
+            padding: 0, // Remove padding for a compact look
+            width: '4.5vmax', // Match height for visual alignment
+
+          },
+        }}
+      >
+        <Button 
+        
+        onClick={() => { handleClick();
+          if (
+            isAuthenticated &&
+            !(user?.activeMentee >= 3)
+          ) {
+            setShowPage(true);
+            setSubscription({
+              type: "weekly",
+              api: "xyz",
+              price: user?.ppm,
+            });
+          } else if (
+            mentor?.user?.signedUpFor === "mentor"
+          ) {
+            toast.error("Mentors Can't Buy Mentorship");
+          } else if (user?.activeMentee >= 3) {
+            toast(
+              `Oops! ${
+                user?.name?.split(" ")[0]
+              } is busy with other mentees. Try again later or explore other mentorships!`,
+              {
+                id: "month",
+                icon: (
+                  <EventAvailableIcon
+                    sx={{ color: "var(--button2)" }}
+                  />
+                ),
+              }
+            );
+          } else {
+            toast(" Login To Buy Your Mentorship");
+            navigate("/login");
+          }
+
+        }
+      }
+
+        >{options[selectedIndex]}</Button>
+        <Button
+          aria-controls={openBtn ? 'split-button-menu' : undefined}
+          aria-expanded={openBtn ? 'true' : undefined}
+          aria-label="select merge strategy"
+          aria-haspopup="menu"
+          onClick={handleToggle}
+        >
+          <ArrowDropDownIcon fontSize="small" />
+        </Button>
+      </ButtonGroup>
+      <Menu
+        anchorEl={anchorEl}
+        open={openBtn}
+        onClose={handleCloseBtn}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        PaperProps={{
+          style: {
+            maxHeight: 250,
+            width: '20ch',
+            marginLeft: 10,
+          },
+        }}
+      >
+        {options.map((option, index) => (
+          <MenuItem
+            key={option}
+            selected={index === selectedIndex}
+            onClick={(event) => handleMenuItemClick(event, index)}
+          >
+            {option}
+          </MenuItem>
+        ))}
+      </Menu>
+    </React.Fragment>
 
 
                         

@@ -54,10 +54,10 @@ export default function SplitButton() {
           },
         }}
       >
-        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+        <Button onClick={handleClick}>PAy {options[selectedIndex]}</Button>
         <Button
-          aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-controls={openBtn ? 'split-button-menu' : undefined}
+          aria-expanded={openBtn ? 'true' : undefined}
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
@@ -67,7 +67,7 @@ export default function SplitButton() {
       </ButtonGroup>
       <Menu
         anchorEl={anchorEl}
-        open={open}
+        open={openBtn}
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
