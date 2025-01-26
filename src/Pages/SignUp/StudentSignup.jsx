@@ -299,23 +299,23 @@ export default function StudentSignUp() {
   const [isHintVisible, setIsHintVisible] = useState(false);
 
   // Validation rules
-  const validationRules = [
-    { regex: /.{8,}/, message: "At least 8 characters" },
-    { regex: /[A-Z]/, message: "At least one uppercase letter" },
-    { regex: /[a-z]/, message: "At least one lowercase letter" },
-    { regex: /\d/, message: "At least one digit" },
-    { regex: /[@$!%*?&]/, message: "At least one special character (@, $, !, %, *, ?, &)" },
-  ];
+  // const validationRules = [
+  //   { regex: /.{8,}/, message: "At least 8 characters" },
+  //   { regex: /[A-Z]/, message: "At least one uppercase letter" },
+  //   { regex: /[a-z]/, message: "At least one lowercase letter" },
+  //   { regex: /\d/, message: "At least one digit" },
+  //   { regex: /[@$!%*?&]/, message: "At least one special character (@, $, !, %, *, ?, &)" },
+  // ];
 
   // Check which rules are satisfied
-  const checkValidationRules = () => {
-    return validationRules.map((rule) => ({
-      ...rule,
-      isSatisfied: rule.regex.test(password),
-    }));
-  };
+  // const checkValidationRules = () => {
+  //   return validationRules.map((rule) => ({
+  //     ...rule,
+  //     isSatisfied: rule.regex.test(password),
+  //   }));
+  // };
 
-  const validationResults = checkValidationRules();
+  // const validationResults = checkValidationRules();
 
 
   React.useEffect(() => {
@@ -367,14 +367,14 @@ export default function StudentSignUp() {
 
     {/* Adding Password Validation By Rajendra Jat */ }
     if (event.target.name === "password") {
-      setPassword(event.target.value);
-      // const password = event.target.value;
-      // setPasswordCriteria({
-      //   minLength: password.length >= 8,
-      //   uppercase: /[A-Z]/.test(password),
-      //   number: /[0-9]/.test(password),
-      //   specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-      // });
+      // setPassword(event.target.value);
+      const password = event.target.value;
+      setPasswordCriteria({
+        minLength: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        number: /[0-9]/.test(password),
+        specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+      });
     }
 
     setstudentInfo({
@@ -703,15 +703,21 @@ export default function StudentSignUp() {
                   </Box>
                 </Grid> */}
 
-                {isHintVisible && (
-                  <div className="password-hint" style={{paddingTop:"5px", paddingLeft:"16px"}}>
-                    <p>Password must meet the following criteria:</p>
-                    <ul>
+                {/* {isHintVisible && (
+                  <div className="password-hint"  style={{
+      paddingTop: "5px",
+      textAlign: "left",
+    }}>
+                    <p style={{ marginBottom: "10px" }}>Password must meet the following criteria:</p>
+                    <ul style={{paddingLeft: "20px",margin:"0", textAlign:"left",}}>
                       {validationResults.map((rule, index) => (
                         <li
                           key={index}
                           style={{
                             color: rule.isSatisfied ? "green" : "red",
+                            margin:"5px 0",
+                            listStylePosition: "outside",
+                            display: "list-item"
                           }}
                         >
                           {rule.isSatisfied ? "✔" : "✖"} {rule.message}
@@ -719,6 +725,58 @@ export default function StudentSignUp() {
                       ))}
                     </ul>
                   </div>
+                )} */}
+
+                {isHintVisible && (
+                  <Grid item xs={12}>
+                    <Box sx={{ mt: 1 }}>
+                      <Typography variant="subtitle1">Password must include:</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.minLength ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.minLength ? "✔" : "✖"}</span> Minimum 8 characters
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.uppercase ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.uppercase ? "✔" : "✖"}</span> At least one uppercase letter
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.number ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.number ? "✔" : "✖"}</span> At least one number
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.specialChar ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.specialChar ? "✔" : "✖"}</span> At least one special character
+                      </Typography>
+                    </Box>
+                  </Grid>
                 )}
 
                 <Grid item xs={12}>
