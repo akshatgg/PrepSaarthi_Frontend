@@ -143,19 +143,24 @@ const HomeTop = () => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", md: "row" }, // Column on small screens, row on medium and above
+              flexDirection: { xs: "column", md: "row" },
               justifyContent: { xs: "center", md: "space-between" },
               alignItems: "center",
-              gap: { xs: 2, md: 0 }, // Gap for column layout
-              mt: 3, // Top margin
+              gap: { xs: 2, md: 3 },
+              mt: 3,
               width: "100%",
             }}
           >
-            {/* First Button: Explore Your Mentor */}
+            {/* Explore Your Mentor Button */}
             <Box
               component={Link}
               to="/lists/mentors"
-              sx={{ width: { xs: "40%", md: "auto" }, textAlign: "center" }}
+              sx={{
+                textAlign: "center",
+                width: "19vmax",
+                height: "5vmax",
+                marginLeft: { xs: "10px", md: "0px" },
+              }}
             >
               <Button
                 sx={{
@@ -163,14 +168,15 @@ const HomeTop = () => {
                   position: "relative",
                   textTransform: "uppercase",
                   color: "white",
-                  fontSize: { xs: "16px", md: "1.2vmax" }, // Adjusted font size
+                  fontSize: "1.2vmax",
                   fontWeight: "bold",
                   backgroundColor: "#3A5AFF",
+                  marginTop: "21.5px",
                   border: "none",
                   cursor: "pointer",
                   borderRadius: "30px",
-                  width: "100%", // Full width for small screens
-                  height: { xs: "50px", md: "5vmax" },
+                  width: "19vmax",
+                  height: "5vmax",
                   transition: "all 0.4s ease",
                   "&:hover": {
                     backgroundColor: "#2a48e5",
@@ -180,7 +186,6 @@ const HomeTop = () => {
                   },
                   "&::before": {
                     content: '""',
-                    zIndex: 1,
                     position: "absolute",
                     left: 0,
                     top: 0,
@@ -189,46 +194,36 @@ const HomeTop = () => {
                     border: "2px solid #0505A9",
                     borderRadius: "30px",
                   },
+                  "&::after": {
+                    content: '""',
+                    zIndex: -2,
+                    position: "absolute",
+                    left: "3px",
+                    top: "3px",
+                    width: "calc(100% - 6px)",
+                    height: "calc(100% - 6px)",
+                    transition: "all 0.3s 0.2s",
+                    borderRadius: "30px",
+                  },
                 }}
               >
                 Explore Your Mentor
               </Button>
             </Box>
 
-            {/* Second Button: Products */}
+            {/* Products Button */}
             <Box
+              className="secBtn"
               sx={{
-                position: "relative",
-                display: "inline-block",
-                marginLeft: { xs: "0", md: "2%" },
-                width: { xs: "40%", md: "auto" },
+                textAlign: "center",
+                width: "19vmax",
+                height: "5vmax",
               }}
             >
-              <Button
-                sx={{
-                  zIndex: 1,
-                  position: "relative",
-                  textTransform: "uppercase",
-                  color: "#0505A9",
-                  fontSize: { xs: "16px", md: "1.2vmax" },
-                  fontWeight: "bold",
-                  border: "none",
-                  cursor: "pointer",
-                  borderRadius: "30px",
-                  width: { xs: "100%", md: "19vmax" },
-                  height: { xs: "50px", md: "5vmax" },
-                  transition: "all 0.4s ease",
-                  border: "2px solid #0505A9",
-                  "&:hover": {
-                    transform: "scale(1.1)",
-                    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
-                  },
-                }}
-              >
-                Products
-              </Button>
+              <BlobButton text="Products" />
             </Box>
           </Box>
+
 
           <Modal
             open={open}
