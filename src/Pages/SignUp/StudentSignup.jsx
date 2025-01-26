@@ -298,26 +298,6 @@ export default function StudentSignUp() {
   const [password, setPassword] = useState("");
   const [isHintVisible, setIsHintVisible] = useState(false);
 
-  // Validation rules
-  // const validationRules = [
-  //   { regex: /.{8,}/, message: "At least 8 characters" },
-  //   { regex: /[A-Z]/, message: "At least one uppercase letter" },
-  //   { regex: /[a-z]/, message: "At least one lowercase letter" },
-  //   { regex: /\d/, message: "At least one digit" },
-  //   { regex: /[@$!%*?&]/, message: "At least one special character (@, $, !, %, *, ?, &)" },
-  // ];
-
-  // Check which rules are satisfied
-  // const checkValidationRules = () => {
-  //   return validationRules.map((rule) => ({
-  //     ...rule,
-  //     isSatisfied: rule.regex.test(password),
-  //   }));
-  // };
-
-  // const validationResults = checkValidationRules();
-
-
   React.useEffect(() => {
     if (prgress === 100) {
       setSuccess(true)
@@ -367,7 +347,6 @@ export default function StudentSignUp() {
 
     {/* Adding Password Validation By Rajendra Jat */ }
     if (event.target.name === "password") {
-      // setPassword(event.target.value);
       const password = event.target.value;
       setPasswordCriteria({
         minLength: password.length >= 8,
@@ -653,80 +632,6 @@ export default function StudentSignUp() {
                 </Grid>
 
                 {/* Adding Password Validation By Rajendra Jat */}
-                {/* <Grid item xs={12}>
-                  <Box sx={{ mt: 1 }}>
-                    <Typography variant="subtitle1">Password must include:</Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: passwordCriteria.minLength ? "green" : "red",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                      }}
-                    >
-                      <span>{passwordCriteria.minLength ? "✔" : "✖"}</span> Minimum 8 characters
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: passwordCriteria.uppercase ? "green" : "red",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                      }}
-                    >
-                      <span>{passwordCriteria.uppercase ? "✔" : "✖"}</span> At least one uppercase letter
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: passwordCriteria.number ? "green" : "red",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                      }}
-                    >
-                      <span>{passwordCriteria.number ? "✔" : "✖"}</span> At least one number
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: passwordCriteria.specialChar ? "green" : "red",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px",
-                      }}
-                    >
-                      <span>{passwordCriteria.specialChar ? "✔" : "✖"}</span> At least one special character
-                    </Typography>
-                  </Box>
-                </Grid> */}
-
-                {/* {isHintVisible && (
-                  <div className="password-hint"  style={{
-      paddingTop: "5px",
-      textAlign: "left",
-    }}>
-                    <p style={{ marginBottom: "10px" }}>Password must meet the following criteria:</p>
-                    <ul style={{paddingLeft: "20px",margin:"0", textAlign:"left",}}>
-                      {validationResults.map((rule, index) => (
-                        <li
-                          key={index}
-                          style={{
-                            color: rule.isSatisfied ? "green" : "red",
-                            margin:"5px 0",
-                            listStylePosition: "outside",
-                            display: "list-item"
-                          }}
-                        >
-                          {rule.isSatisfied ? "✔" : "✖"} {rule.message}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )} */}
-
                 {isHintVisible && (
                   <Grid item xs={12}>
                     <Box sx={{ mt: 1 }}>
