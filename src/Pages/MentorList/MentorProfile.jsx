@@ -61,12 +61,13 @@ const [openBtn, setOpenBtn] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
+    console.info(`You clicked on ${options[selectedIndex]}`);
   };
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     setOpenBtn(false);
+    console.log(index);
   };
 
   const handleToggle = (event) => {
@@ -233,6 +234,8 @@ const [openBtn, setOpenBtn] = React.useState(false);
     navigate("/lists/mentors");
   };
   useEffect(() => {
+    console.log(selectedIndex);
+    
     if (!isAuthenticated && !menAuth && !menLoading && !stuLoading) {
       setOpen(true);
     }
@@ -483,7 +486,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
                           
                             Features
                           </Button>
-                          <Button
+                          {/* <Button
                             variant="contained"
                             sx={{
                               width: { xs: "18vmax", md: "12vmax" },
@@ -527,7 +530,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
                           >
                             &#8377;
                             {Intl.NumberFormat("en-IN").format(user?.ppm)}/month
-                          </Button>
+                          </Button> */}
 
 
 
@@ -577,14 +580,14 @@ const [openBtn, setOpenBtn] = React.useState(false);
                   type: "weekly",
                   api: "xyz",
                   price: (() => {
-                    const basePrice = user?.ppm || 0; // Get ppm value, default to 0 if undefined
+                    const basePrice = user?.ppm; // Get ppm value, default to 0 if undefined
                     const multipliedValue = basePrice * 3; // Multiply by 3
-                    const discount = multipliedValue * 0.03; // Calculate 1% discount
-                    console.log("Calculated Price:", finalPrice);
+                    const discount = multipliedValue * 0.03; // Calculate 3% discount
+                    console.log("Calculated Price:", multipliedValue - discount);
                     return multipliedValue - discount; // Subtract discount and return the final price
                   })(),
                 });  
-                console.log("hi");
+                
               }
 
               else if(options[selectedIndex] == "6 month"){
@@ -593,14 +596,14 @@ const [openBtn, setOpenBtn] = React.useState(false);
                   type: "weekly",
                   api: "xyz",
                   price: (() => {
-                    const basePrice = user?.ppm || 0; // Get ppm value, default to 0 if undefined
+                    const basePrice = user?.ppm ; // Get ppm value, default to 0 if undefined
                     const multipliedValue = basePrice * 6; // Multiply by 3
-                    const discount = multipliedValue * 0.06; // Calculate 1% discount
-                    console.log("Calculated Price:", finalPrice);
+                    const discount = multipliedValue * 0.06; // Calculate 6% discount
+                    console.log("Calculated Price:", multipliedValue - discount);
                     return multipliedValue - discount; // Subtract discount and return the final price
                   })(),
                 });  
-                console.log("hi");
+                
               }
           } 
           else if (
