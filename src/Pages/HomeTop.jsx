@@ -14,7 +14,10 @@ import BlobButton from '../Components/BlobButton/BlobButton.jsx';
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import LineButton from '../Components/LineButton.jsx/LineButton.jsx';
+
+import LineButton from "../Components/LineButton/LineButton.jsx";
+
+
 
 const HomeTop = () => {
   useEffect(() => {
