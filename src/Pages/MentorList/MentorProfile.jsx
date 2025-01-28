@@ -568,7 +568,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
               if( options[selectedIndex] == "1 month"){
                 setShowPage(true);
                 setSubscription({
-                  type: "weekly",
+                  type: "1month",
                   api: "xyz",
                   price: user?.ppm,
                   
@@ -577,7 +577,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
               else if(options[selectedIndex] == "3 month"){
                 setShowPage(true);
                 setSubscription({
-                  type: "weekly",
+                  type: "3month",
                   api: "xyz",
                   price: (() => {
                     const basePrice = user?.ppm; // Get ppm value, default to 0 if undefined
@@ -593,7 +593,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
               else if(options[selectedIndex] == "6 month"){
                 setShowPage(true);
                 setSubscription({
-                  type: "weekly",
+                  type: "6month",
                   api: "xyz",
                   price: (() => {
                     const basePrice = user?.ppm ; // Get ppm value, default to 0 if undefined

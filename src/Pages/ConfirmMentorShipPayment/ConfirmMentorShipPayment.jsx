@@ -240,27 +240,37 @@ const  ConfirmMentorShipPayment = ({ item, sub, stu }) => {
           </Grid>
         </Box>
         <Box sx={{ width: { xs: "38vmax", md: "28vmax" }, p: "1vmax" }}>
-          <Typography textAlign="end">Total: {sub.price} </Typography>
-          {sub.type === "weekly" ? (
-            <LoadingButton
-              loading={loading}
-              sx={{ width: { xs: "36vmax", md: "26vmax" }, p: "1vmax" }}
-              variant="contained"
-              onClick={() => handlePayment(sub.price,'month')}
-            >
-              Pay {sub.price}
-            </LoadingButton>
-          ) : (
-            <LoadingButton
-              loading={loading}
-              sx={{ width: { xs: "36vmax", md: "26vmax" }, p: "1vmax" }}
-              variant="contained"
-              onClick={() => handlePayment(sub.price,'week')}
-            >
-              Pay {sub.price}
-            </LoadingButton>
-          )}
-        </Box>
+  <Typography textAlign="end">Total: {sub.price}</Typography>
+  {sub.type === "1month" ? (
+    <LoadingButton
+      loading={loading}
+      sx={{ width: { xs: "36vmax", md: "26vmax" }, p: "1vmax" }}
+      variant="contained"
+      onClick={() => handlePayment(sub.price, 'month')}
+    >
+      Pay {sub.price}
+    </LoadingButton>
+  ) : sub.type === "3month" ? (
+    <LoadingButton
+      loading={loading}
+      sx={{ width: { xs: "36vmax", md: "26vmax" }, p: "1vmax" }}
+      variant="contained"
+      onClick={() => handlePayment(sub.price, '3month')}
+    >
+      Pay {sub.price}
+    </LoadingButton>
+  ) : (
+    <LoadingButton
+      loading={loading}
+      sx={{ width: { xs: "36vmax", md: "26vmax" }, p: "1vmax" }}
+      variant="contained"
+      onClick={() => handlePayment(sub.price, '6month')}
+    >
+      Pay {sub.price}
+    </LoadingButton>
+  )}
+</Box>
+
 
       
       </Box>
