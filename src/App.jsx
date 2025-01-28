@@ -169,8 +169,10 @@ const App = () => {
           />
         </Route>
 
+
         <Route path="/verify/account" element={<OTPVerification />}></Route>
         <Route path="/" element={<Home />}></Route> 
+
         <Route path="/faq" element={<Home />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/bm" element={<Signup />}></Route>

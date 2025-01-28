@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from 'react';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -115,6 +116,18 @@ export default function MentorSignUp() {
       }, 1200);
     }
   }, [prgress]);
+
+  {/* Adding Password Validation By Rajendra Jat */ }
+  
+    const [passwordCriteria, setPasswordCriteria] = React.useState({
+      minLength: false,
+      uppercase: false,
+      number: false,
+      specialChar: false,
+    }); //Password Hint
+    const [password, setPassword] = useState("");
+    const [isHintVisible, setIsHintVisible] = useState(false);
+
   const handleChange = async (event) => {
     if (event.target.name === "avatar") {
       setuploading(true);
@@ -178,6 +191,17 @@ export default function MentorSignUp() {
     } else {
       setMentorInfo({ ...mentorInfo, [event.target.name]: event.target.value });
     }
+
+    {/* Adding Password Validation By Rajendra Jat */ }
+    if (event.target.name === "password") {
+      const password = event.target.value;
+      setPasswordCriteria({
+        minLength: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        number: /[0-9]/.test(password),
+        specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+      });
+    }
   };
 
   React.useEffect(() => {
@@ -191,6 +215,7 @@ export default function MentorSignUp() {
       navigate("/verify/account");
     }
   }, [dispatch, error, navigate, user]);
+  
   return (
     <>
       <MetaData title="Sign Up Mentor" />
@@ -272,8 +297,64 @@ export default function MentorSignUp() {
                     type="password"
                     id="password"
                     onChange={handleChange}
+                    onFocus={() => setIsHintVisible(true)}
+                    onBlur={() => setIsHintVisible(false)}
                   />
                 </Grid>
+
+                {/* Adding Password Validation By Rajendra Jat */}
+                {isHintVisible && (
+                  <Grid item xs={12}>
+                    <Box sx={{ mt: 1 }}>
+                      <Typography variant="subtitle1">Password must include:</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.minLength ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.minLength ? "✔" : "✖"}</span> Minimum 8 characters
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.uppercase ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.uppercase ? "✔" : "✖"}</span> At least one uppercase letter
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.number ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.number ? "✔" : "✖"}</span> At least one number
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: passwordCriteria.specialChar ? "green" : "red",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <span>{passwordCriteria.specialChar ? "✔" : "✖"}</span> At least one special character
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+
                 <Grid item xs={12}>
                   <Box display="flex" alignItems="center">
                     <Box

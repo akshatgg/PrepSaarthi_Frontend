@@ -59,7 +59,7 @@ const  ConfirmMentorShipPayment = ({ item, sub, stu }) => {
   //           "Get access to india's top IITians mentorship with few clicks",
   //         image: Logo,
   //         subscription_id: subscriptionId,
-  //         callback_url: `${process.env.REACT_APP_API_URL}/v1/paymentVerification/subscription?id=${item.id}&price=${sub.price}`,
+  //         callback_url: `${process.env.VITE_API_URL}/v1/paymentVerification/subscription?id=${item.id}&price=${sub.price}`,
   //         prefill: {
   //           name: stu.name,
   //           email: stu.email,
