@@ -40,6 +40,7 @@ import PrivateRouteStu from "./Components/Route/PrivateRouteStu.jsx";
 import MetaData from "./utils/Metadata.jsx";
 import OTPVerification from "./Pages/OTPVerification/OTPVerification.jsx";
 import SyllabusDrawer from "./Pages/SyllabusTracker/SyllabusDrawer.jsx";
+import Features from "./Pages/MentorList/Features.jsx";
 const App = () => {
   const dispatch = useDispatch();
   const [notification,setNotification] = useState([])
@@ -172,7 +173,7 @@ const App = () => {
 
         <Route path="/verify/account" element={<OTPVerification />}></Route>
         <Route path="/" element={<Home />}></Route> 
-
+        <Route path="/features" element={<Features/>}></Route>
         <Route path="/faq" element={<Home />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/bm" element={<Signup />}></Route>

@@ -447,6 +447,7 @@ const [openBtn, setOpenBtn] = React.useState(false);
                           <Button
                             variant="outlined"
                             sx={{ width: { xs: "18vmax", md: "12vmax" } }}
+                            onClick={() => navigate('/features')} 
                             // onClick={() => {
                             //   if (
                             //     isAuthenticated &&
