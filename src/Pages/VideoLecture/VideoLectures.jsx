@@ -23,7 +23,7 @@ import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import CloseIcon from '@mui/icons-material/Close';
-import VideoLectureData from './VideoLectureData.json'
+import  VideoLecturePhysicsData from './VideoLecturePhysicsData.json'
 const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.common.white,
@@ -33,7 +33,7 @@ const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
 const Complete = () => <Checkbox />;
 
 const VideoLectures = () => {
-  const [notes, setNotes] = useState(VideoLectureData);
+  const [notes, setNotes] = useState( VideoLecturePhysicsData);
   const [selectedNote, setSelectedNote] = useState(null);
   const [noteText, setNoteText] = useState('');
   const [open, setOpen] = useState(false);

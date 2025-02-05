@@ -38,6 +38,8 @@ import {
   updateMentorPassword,
   updateMentorRole,
   verifyOTPReducer,
+  uploadvideoLecturePhyNoteReducer,
+  fetchvideoLecturePhyNoteReducer,
 } from "./reducer/userReducer";
 import {
   allConnectionReducer,
@@ -60,6 +62,8 @@ import {
 import { newPayment, newSubscription } from "./reducer/paymnentReducer";
 const store = configureStore({
   reducer: {
+    uploadvideoLecturePhyNote: uploadvideoLecturePhyNoteReducer,
+    fetchvideoLecturePhyNote: fetchvideoLecturePhyNoteReducer,
     mentor: mentorSignup,
     student: studentSignup,
     mentorDeatil: mentorDetailsReducer,

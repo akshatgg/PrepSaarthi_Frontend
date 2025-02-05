@@ -21,6 +21,7 @@ import {
   getAllNotification,
   getAllNotificationStu,
   getAllStudents,
+  getNotesPhyysics,
   getUserDetails,
   getUserDetailsAdmin,
   getVisitsData,
@@ -50,6 +51,7 @@ import {
   updatePasswordMentor,
   updateRoleMentor,
   updateStatusHeadMentor,
+  uploadNotes,
   verifyOTP,
 } from "../action/userAction";
 
@@ -149,7 +151,49 @@ const initalState = {};
 //       };
 //     });
 // });
+export const uploadvideoLecturePhyNoteReducer=createReducer(initalState,(builder)=>{
+  builder
+      .addCase(uploadNotes.fulfilled, (state, action) => {
+        state.notes[action.payload.videoId] = action.payload.note;
+        state.loading = false;
+      })
+      .addMatcher(
+        (action) => action.type.startsWith('videoNotes/upload') && action.type.endsWith('/pending'),
+        (state) => {
+          state.loading = true;
+        }
+      )
+      .addMatcher(
+        (action) => action.type.startsWith('videoNotes/upload') && action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+})
 
+export const fetchvideoLecturePhyNoteReducer=createReducer(initalState,(builder)=>{
+  builder
+  .addCase(getNotesPhyysics.fulfilled, (state, action) => {
+    action.payload.forEach(note => {
+      state.notes[note.videoId] = note.note;
+    });
+    state.loading = false;
+  })
+  .addMatcher(
+    (action) => action.type.startsWith('videoNotes/get') && action.type.endsWith('/pending'),
+    (state) => {
+      state.loading = true;
+    }
+  )
+  .addMatcher(
+    (action) => action.type.startsWith('videoNotes/get') && action.type.endsWith('/rejected'),
+    (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+  );
+})
 export const mentorSignup = createReducer(initalState, (builder) => {
   builder
     //Signup
