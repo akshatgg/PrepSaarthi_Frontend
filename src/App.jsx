@@ -41,6 +41,7 @@ import MetaData from "./utils/Metadata.jsx";
 import OTPVerification from "./Pages/OTPVerification/OTPVerification.jsx";
 import SyllabusDrawer from "./Pages/SyllabusTracker/SyllabusDrawer.jsx";
 import Features from "./Pages/MentorList/Features.jsx";
+import VideoLectures from "./Pages/VideoLecture/VideoLectures.jsx";
 const App = () => {
   const dispatch = useDispatch();
   const [notification,setNotification] = useState([])
@@ -159,7 +160,9 @@ const App = () => {
         <Route element={<PrivateRouteStu allowedRoles={["student"]} />}>
         <Route path="/password/change" element={<PasswordUpdate />}></Route>
         <Route path="/syllabus/drawer" element={<SyllabusDrawer />}></Route>
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/video/track/physics" element={<VideoLectures subject="Physics" />} />
+      <Route path="/video/track/chemistry" element={<VideoLectures subject="Chemistry" />} />
+      <Route path="/video/track/math" element={<VideoLectures subject="Math" />} />        <Route path="/settings" element={<Settings />} />
           <Route
             path="/update/profile/student"
             element={<EditProfileStudent />}

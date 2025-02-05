@@ -1,0 +1,170 @@
+[
+  {
+    "id": 1,
+    "topic": "Basic Maths in Physics",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 2,
+    "topic": "Units and Dimensions & Error Analysis",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 3,
+    "topic": "Motion in 1D",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 4,
+    "topic": "Motion in 2D",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 5,
+    "topic": "Newton's laws of motion",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 6,
+    "topic": "Work, Energy and Power",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 7,
+    "topic": "Circular Motion",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 8,
+    "topic": "Centre of Mass and collision",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 9,
+    "topic": "Rotational Motion",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 10,
+    "topic": "Gravitation",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 11,
+    "topic": "SHM",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 12,
+    "topic": "Mechanical Properties of Matter",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 13,
+    "topic": "Fluid Mechanics",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 14,
+    "topic": "Waves & Sound",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 15,
+    "topic": "Elasticity, Heat and Thermodynamics",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 16,
+    "topic": "Electrostatics - 1",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 17,
+    "topic": "Electrostatics - 2",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 18,
+    "topic": "Capacitors",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 19,
+    "topic": "Current Electricity",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 20,
+    "topic": "Magnetism",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 21,
+    "topic": "Geometrical Optics",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 22,
+    "topic": "Optical Instruments",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 23,
+    "topic": "Wave optics",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 24,
+    "topic": "Modern Physics",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 25,
+    "topic": "Alternating Current",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 26,
+    "topic": "Electromagnetic Induction",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 27,
+    "topic": "Semiconductors",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  },
+  {
+    "id": 28,
+    "topic": "EM Waves and Communication System",
+    "videoLink": "Click here to watch",
+    "note": "hi"
+  }
+]

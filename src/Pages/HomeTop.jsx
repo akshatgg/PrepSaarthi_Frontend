@@ -222,6 +222,7 @@ const HomeTop = () => {
                 width: "19vmax",
                 height: "5vmax",
               }}
+              onClick={handleOpen}
             >
               <BlobButton text="Products" />
             </Box>
