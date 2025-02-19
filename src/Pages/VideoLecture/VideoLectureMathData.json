@@ -1,169 +1,211 @@
 [
   {
     "id": 1,
-    "topic": "Basic Maths in Physics",
+    "topic": "Basic Mathematics",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 2,
-    "topic": "Units and Dimensions & Error Analysis",
+    "topic": "Sets and Relations",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 3,
-    "topic": "Motion in 1D",
+    "topic": "Trigonometric Ratio and Identity",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 4,
-    "topic": "Motion in 2D",
+    "topic": "Trigonometric Equations",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 5,
-    "topic": "Newton's laws of motion",
+    "topic": "Inverse Trigonometric Functions",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 6,
-    "topic": "Work, Energy and Power",
+    "topic": "Quadratic Equations",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 7,
-    "topic": "Circular Motion",
+    "topic": "Sequence and Series",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 8,
-    "topic": "Centre of Mass and collision",
+    "topic": "Binomial Theorem",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 9,
-    "topic": "Rotational Motion",
+    "topic": "Permutation and Combination",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 10,
-    "topic": "Gravitation",
+    "topic": "Straight Line",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 11,
-    "topic": "SHM",
+    "topic": "Circle",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 12,
-    "topic": "Mechanical Properties of Matter",
+    "topic": "Parabola",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 13,
-    "topic": "Fluid Mechanics",
+    "topic": "Ellipse",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 14,
-    "topic": "Waves & Sound",
+    "topic": "Hyperbola",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 15,
-    "topic": "Elasticity, Heat and Thermodynamics",
+    "topic": "Complex Numbers",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 16,
-    "topic": "Electrostatics - 1",
+    "topic": "Solutions of Triangle",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 17,
-    "topic": "Electrostatics - 2",
+    "topic": "Mathematical Induction",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 18,
-    "topic": "Capacitors",
+    "topic": "Statistics",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 19,
-    "topic": "Current Electricity",
+    "topic": "Mathematical Reasoning",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 20,
-    "topic": "Magnetism",
+    "topic": "Functions",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 21,
-    "topic": "Geometrical Optics",
+    "topic": "Limits",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 22,
-    "topic": "Optical Instruments",
+    "topic": "Contunuity",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 23,
-    "topic": "Wave optics",
+    "topic": "Differentiability",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 24,
-    "topic": "Modern Physics",
+    "topic": "Methods of Differentiation",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 25,
-    "topic": "Alternating Current",
+    "topic": "Application of Derivates",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 26,
-    "topic": "Electromagnetic Induction",
+    "topic": "Indefinite Integration",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 27,
-    "topic": "Semiconductors",
+    "topic": "Definite Integration",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 28,
-    "topic": "EM Waves and Communication System",
+    "topic": "Area under Curves",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 29,
+    "topic": "Differential Equations",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 30,
+    "topic": "Matrices",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 31,
+    "topic": "Determinants",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 32,
+    "topic": "Probabilility",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 33,
+    "topic": "Vector Algebra",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 34,
+    "topic": "3 Dimensional Geometry",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 35,
+    "topic": "Linear Programming",
     "videoLink": "Click here to watch",
     "note": ""
   }

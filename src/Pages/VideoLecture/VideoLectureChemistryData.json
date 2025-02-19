@@ -1,169 +1,217 @@
 [
   {
     "id": 1,
-    "topic": "Basic Maths in Physics",
+    "topic": "Mole Concept",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 2,
-    "topic": "Units and Dimensions & Error Analysis",
+    "topic": "Atomic Structure",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 3,
-    "topic": "Motion in 1D",
+    "topic": "Gaseous State",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 4,
-    "topic": "Motion in 2D",
+    "topic": "Thermodynamics",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 5,
-    "topic": "Newton's laws of motion",
+    "topic": "Thermochemistry",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 6,
-    "topic": "Work, Energy and Power",
+    "topic": "Chemical Equilibrium",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 7,
-    "topic": "Circular Motion",
+    "topic": "Ionic Equations",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 8,
-    "topic": "Centre of Mass and collision",
+    "topic": "Periodic Table",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 9,
-    "topic": "Rotational Motion",
+    "topic": "Chemical Bonding",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 10,
-    "topic": "Gravitation",
+    "topic": "IUPAC Nomenclature",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 11,
-    "topic": "SHM",
+    "topic": "General organic Chemistry",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 12,
-    "topic": "Mechanical Properties of Matter",
+    "topic": "Isomerism",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 13,
-    "topic": "Fluid Mechanics",
+    "topic": "Reaction mechanism",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 14,
-    "topic": "Waves & Sound",
+    "topic": "Hydrocarbon",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 15,
-    "topic": "Elasticity, Heat and Thermodynamics",
+    "topic": "Reaction Mechanism",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 16,
-    "topic": "Electrostatics - 1",
+    "topic": "Hydrocarbon",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 17,
-    "topic": "Electrostatics - 2",
+    "topic": "Aromatic Compounds",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 18,
-    "topic": "Capacitors",
+    "topic": "S Block",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 19,
-    "topic": "Current Electricity",
+    "topic": "Qualitative Analysis",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 20,
-    "topic": "Magnetism",
+    "topic": "Redox Reactions",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 21,
-    "topic": "Geometrical Optics",
+    "topic": "P Block (Part - 1)",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 22,
-    "topic": "Optical Instruments",
+    "topic": "Solid State",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 23,
-    "topic": "Wave optics",
+    "topic": "Chemical Kinetics",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 24,
-    "topic": "Modern Physics",
+    "topic": "Nuclear Chemistry",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 25,
-    "topic": "Alternating Current",
+    "topic": "Electrochemistry",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 26,
-    "topic": "Electromagnetic Induction",
+    "topic": "Liquid Solution",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 27,
-    "topic": "Semiconductors",
+    "topic": "Surface Chemistry",
     "videoLink": "Click here to watch",
     "note": ""
   },
   {
     "id": 28,
-    "topic": "EM Waves and Communication System",
+    "topic": "Halogen Derivates",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 29,
+    "topic": "Alcohol, Phenol and Ether",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 30,
+    "topic": "Aldehyde and Ketone",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 31,
+    "topic": "Carboxylic Acid and Derivates",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 32,
+    "topic": "Biomolecules",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 33,
+    "topic": "Coordination Compounds",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 34,
+    "topic": "Amines",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 35,
+    "topic": "P Block (Part 2)",
+    "videoLink": "Click here to watch",
+    "note": ""
+  },
+  {
+    "id": 36,
+    "topic": "D and F Block",
     "videoLink": "Click here to watch",
     "note": ""
   }

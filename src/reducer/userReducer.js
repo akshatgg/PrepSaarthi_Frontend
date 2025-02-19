@@ -151,6 +151,10 @@ const initalState = {};
 //       };
 //     });
 // });
+
+
+
+
 export const uploadvideoLecturePhyNoteReducer=createReducer(initalState,(builder)=>{
   builder
       .addCase(uploadNotes.fulfilled, (state, action) => {
@@ -171,6 +175,7 @@ export const uploadvideoLecturePhyNoteReducer=createReducer(initalState,(builder
         }
       );
 })
+
 
 export const fetchvideoLecturePhyNoteReducer=createReducer(initalState,(builder)=>{
   builder
@@ -194,6 +199,8 @@ export const fetchvideoLecturePhyNoteReducer=createReducer(initalState,(builder)
     }
   );
 })
+
+
 export const mentorSignup = createReducer(initalState, (builder) => {
   builder
     //Signup

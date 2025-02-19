@@ -160,9 +160,8 @@ const App = () => {
         <Route element={<PrivateRouteStu allowedRoles={["student"]} />}>
         <Route path="/password/change" element={<PasswordUpdate />}></Route>
         <Route path="/syllabus/drawer" element={<SyllabusDrawer />}></Route>
-        <Route path="/video/track/physics" element={<VideoLectures subject="Physics" />} />
-      <Route path="/video/track/chemistry" element={<VideoLectures subject="Chemistry" />} />
-      <Route path="/video/track/math" element={<VideoLectures subject="Math" />} />        <Route path="/settings" element={<Settings />} />
+        <Route path="/video/track/:subject" element={<VideoLectures />} />      
+       <Route path="/settings" element={<Settings />} />
           <Route
             path="/update/profile/student"
             element={<EditProfileStudent />}
