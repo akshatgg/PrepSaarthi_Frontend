@@ -7,7 +7,7 @@ const LineButton = () => {
      
       <div className="line-container">
         {/* Button 2 */}
-        <a href="#" className="line-btn line-btn-2">Join Us</a>
+        <a className="line-btn line-btn-2">Join Us</a>
       </div>
     </section>
   );

@@ -5,6 +5,37 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+
+
+
+export const uploadNotes = createAsyncThunk(
+  "videoNotes/upload",
+  async ({ videoId, note }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post(`/v1/video/physics/notes`, {
+        videoId,
+        note
+      });
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getNotesPhyysics = createAsyncThunk(
+  "user/get/notes",
+  async (data, { rejectWithValue }) => {
+    try {
+      // Use the `data.id` to build the URL dynamically
+      const response = await axiosInstance.get(`/v1/video/physics/fetch/notes`);
+      return response.data; // Return the data from the response
+    } catch (err) {
+      return rejectWithValue(err.response.data); // Return error data if request fails
+    }
+  }
+);
+
 // LOGIN
 
 export const loginUser = createAsyncThunk(

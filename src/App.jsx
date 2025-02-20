@@ -40,12 +40,32 @@ import PrivateRouteStu from "./Components/Route/PrivateRouteStu.jsx";
 import MetaData from "./utils/Metadata.jsx";
 import OTPVerification from "./Pages/OTPVerification/OTPVerification.jsx";
 import SyllabusDrawer from "./Pages/SyllabusTracker/SyllabusDrawer.jsx";
+import Features from "./Pages/MentorList/Features.jsx";
+import VideoLectures from "./Pages/VideoLecture/VideoLectures.jsx";
 const App = () => {
   const dispatch = useDispatch();
   const [notification,setNotification] = useState([])
   const [soundEnabled, setSoundEnabled] = useState(false); // Control sound permissions
   const sound = new Audio(notificationSound); 
   
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/v1/health`);
+        const data = await response.json();
+        console.log(data.message);
+        console.log("gdgdgd");
+        
+      } catch (error) {
+        console.error('Error connecting to backend:', error);
+      }
+    };
+    console.log("hii");
+    
+    checkBackend();
+  }, []);
+  
+
   let socket = useMemo(
     () =>
       io(import.meta.env.VITE_API_URL, {
@@ -53,7 +73,9 @@ const App = () => {
          }),
       []
     );
-
+    socket.on("connect", () => {
+      console.log("Connected to the server:", socket.id);
+    });
   const { user, error } = useSelector((state) => state.mentor);
   const { user:stuUser ,error: stuError } = useSelector((state) => state.student);
   
@@ -138,7 +160,8 @@ const App = () => {
         <Route element={<PrivateRouteStu allowedRoles={["student"]} />}>
         <Route path="/password/change" element={<PasswordUpdate />}></Route>
         <Route path="/syllabus/drawer" element={<SyllabusDrawer />}></Route>
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/video/track/:subject" element={<VideoLectures />} />      
+       <Route path="/settings" element={<Settings />} />
           <Route
             path="/update/profile/student"
             element={<EditProfileStudent />}
@@ -149,8 +172,10 @@ const App = () => {
           />
         </Route>
 
-        {/* <Route path="/verify/account" element={<OTPVerification />}></Route> */}
-        <Route path="/" element={<Home />}></Route>
+
+        <Route path="/verify/account" element={<OTPVerification />}></Route>
+        <Route path="/" element={<Home />}></Route> 
+        <Route path="/features" element={<Features/>}></Route>
         <Route path="/faq" element={<Home />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/bm" element={<Signup />}></Route>
