@@ -1,6 +1,6 @@
-// VideoLectures.js (Main Component with Notes Dialog)
+// VideoLectures.js
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -18,7 +18,9 @@ import {
   TextField,
   Button,
   IconButton,
-  Box
+  Box,
+  Menu,
+  MenuItem
 } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import NoteIcon from '@mui/icons-material/Note';
@@ -46,6 +48,23 @@ const VideoLectures = () => {
   const [selectedNote, setSelectedNote] = useState(null);
   const [noteText, setNoteText] = useState('');
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Dropdown state for subject menu
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSubjectSelect = (selectedSubject) => {
+    navigate(`/video/track/${selectedSubject}`);
+    setAnchorEl(null);
+  };
 
   // Load and initialize notes
   useEffect(() => {
@@ -114,9 +133,30 @@ const VideoLectures = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h3" align="center" gutterBottom sx={{ mb: 4 }}>
-        {subject.charAt(0).toUpperCase() + subject.slice(1)} Video Lectures
-      </Typography>
+      {/* Header with Title on Left and Dropdown on Right */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+        <Typography variant="h3"  align="center" sx={{ flexGrow: 1 }}>
+          {subject.charAt(0).toUpperCase() + subject.slice(1)} Video Lectures
+        </Typography>
+        <Box>
+          <Button 
+            variant="outlined"
+            onClick={handleMenuClick}
+            sx={{ textTransform: 'capitalize' }}
+          >
+            Subjects
+          </Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={() => handleSubjectSelect('physics')}>Physics</MenuItem>
+            <MenuItem onClick={() => handleSubjectSelect('chemistry')}>Chemistry</MenuItem>
+            <MenuItem onClick={() => handleSubjectSelect('math')}>Mathematics</MenuItem>
+          </Menu>
+        </Box>
+      </Box>
 
       {/* Class 11 Table */}
       <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 2 }}>
@@ -145,7 +185,11 @@ const VideoLectures = () => {
           </TableHead>
           
           <TableBody>
-            {notes.filter(row => row.id < 16).map((row) => (
+            {notes.filter((row) => 
+              subject === "physics" ? row.id < 16 :
+              subject === "chemistry" ? row.id < 22 : 
+              row.id < 20
+            ).map((row) => (
               <TableRow key={row.id} hover>
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.topic}</TableCell>
