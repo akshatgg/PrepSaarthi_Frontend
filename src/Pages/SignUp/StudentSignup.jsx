@@ -767,6 +767,8 @@ export default function StudentSignUp() {
                       //     })
                       //   );
                       // }}
+                      onClick={handleSubmit}
+                      type="submit"
                       fullWidth
                       loading={loading}
                       disabled={uploading}

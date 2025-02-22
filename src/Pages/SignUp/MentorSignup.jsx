@@ -785,16 +785,19 @@ export default function MentorSignUp() {
                 </Grid>
                 <Grid item xs={12}>
                   <LoadingButton
-                    loading={otpLoading}
-                    onClick={() => {
-                      dispatch(
-                        sendOTP({
-                          email: mentorInfo.email,
-                          mobileNumber: mentorInfo.phoneNo,
-                        })
-                      );
-                    }}
+                    // loading={otpLoading}
+                    // onClick={() => {
+                    //   dispatch(
+                    //     sendOTP({
+                    //       email: mentorInfo.email,
+                    //       mobileNumber: mentorInfo.phoneNo,
+                    //     })
+                    //   );
+                    // }}
+                    onClick={handleSubmit}
                     fullWidth
+                    loading={loading}
+                    disabled={uploading}
                     sx={!sent ? {
                       display:'block',
                       mt: 3,
