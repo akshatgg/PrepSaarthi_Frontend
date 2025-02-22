@@ -1242,6 +1242,104 @@ export const stuSendOTPemailReducer = createReducer(initalState, (builder) => {
   });
 });
 
+export const mentorSendOTPemailReducer = createReducer(initalState, (builder) => {
+  builder
+
+   .addCase(stusendOTPemail.pending, (state, action) => {
+       return {
+         ...state,
+         loading: true,
+       };
+     })
+     .addCase(stusendOTPemail.fulfilled, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         success: action.payload.status,
+         message: action.payload.message,
+         sent: true
+       };
+     })
+     .addCase(stusendOTPemail.rejected, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         error: action.payload,
+       };
+     })
+     .addCase(reset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         success: null,
+         message: null,
+       };
+     })
+     .addCase(otpReset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         sent: false
+       };
+     })
+   
+     .addCase(clearError.fulfilled, (state, action) => {
+       return {
+         ...state,
+         error: null,
+       };
+     });
+});
+
+export const mentorSendOTPnumbReducer = createReducer(initalState, (builder) => {
+
+  builder
+
+   .addCase(stusendOTPnumb.pending, (state, action) => {
+       return {
+         ...state,
+         loading: true,
+       };
+     })
+     .addCase(stusendOTPnumb.fulfilled, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         success: action.payload.status,
+         message: action.payload.message,
+         sent: true
+       };
+     })
+     .addCase(stusendOTPnumb.rejected, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         error: action.payload,
+       };
+     })
+     .addCase(reset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         success: null,
+         message: null,
+       };
+     })
+     .addCase(otpReset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         sent: false
+       };
+     })
+   
+     .addCase(clearError.fulfilled, (state, action) => {
+       return {
+         ...state,
+         error: null,
+       };
+     });
+}); 
+
+
+
+
 export const reSendOTPReducerStu = createReducer(initalState, (builder) => {
   builder
 

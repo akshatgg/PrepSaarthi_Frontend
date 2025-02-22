@@ -534,7 +534,7 @@ export const stusendOTPnumb = createAsyncThunk(
       if (mobileNumber) payload.mobileNumber = mobileNumber;
 
       const { data } = await axiosInstance.post(
-        `/v1/student/send/otp`,
+        `/v1/student/send/mobile/otp`,
         payload,
         config
       );
@@ -544,6 +544,7 @@ export const stusendOTPnumb = createAsyncThunk(
     }
   }
 );
+
 
 
 export const resendOTP = createAsyncThunk(
@@ -648,7 +649,38 @@ export const stuVerifyOTPNumb = createAsyncThunk(
     }
   }
 );
-
+export const mentorVerifyOTPEmail = createAsyncThunk(
+  "mentor/verify/emailOTP",
+  async (otp, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const { data } = await axiosInstance.post(
+        `/v1/mentor/verify/emailotp`,
+        { otp: otp },
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const mentorVerifyOTPNumb = createAsyncThunk(
+  "mentor/verify/numbOTP",
+  async (otp, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const { data } = await axiosInstance.post(
+        `/v1/mentor/verify/mobileotp`,
+        { otp: otp },
+        config 
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 
 
