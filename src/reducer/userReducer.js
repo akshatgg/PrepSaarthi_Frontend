@@ -42,6 +42,8 @@ import {
   stusendOTP,
   stusendOTPemail,
   stusendOTPnumb,
+  mentorSendOTPnumb,
+  mentorSendOTPemail,
   swapConnection,
   updateCoverImage,
   updateMentorFinalInfo,
@@ -1245,13 +1247,13 @@ export const stuSendOTPemailReducer = createReducer(initalState, (builder) => {
 export const mentorSendOTPemailReducer = createReducer(initalState, (builder) => {
   builder
 
-   .addCase(stusendOTPemail.pending, (state, action) => {
+   .addCase(mentorSendOTPemail.pending, (state, action) => {
        return {
          ...state,
          loading: true,
        };
      })
-     .addCase(stusendOTPemail.fulfilled, (state, action) => {
+     .addCase(mentorSendOTPemail.fulfilled, (state, action) => {
        return {
          ...state,
          loading: false,
@@ -1260,7 +1262,7 @@ export const mentorSendOTPemailReducer = createReducer(initalState, (builder) =>
          sent: true
        };
      })
-     .addCase(stusendOTPemail.rejected, (state, action) => {
+     .addCase(mentorSendOTPemail.rejected, (state, action) => {
        return {
          ...state,
          loading: false,
@@ -1293,13 +1295,13 @@ export const mentorSendOTPnumbReducer = createReducer(initalState, (builder) => 
 
   builder
 
-   .addCase(stusendOTPnumb.pending, (state, action) => {
+   .addCase(mentorSendOTPnumb.pending, (state, action) => {
        return {
          ...state,
          loading: true,
        };
      })
-     .addCase(stusendOTPnumb.fulfilled, (state, action) => {
+     .addCase(mentorSendOTPnumb.fulfilled, (state, action) => {
        return {
          ...state,
          loading: false,
@@ -1308,7 +1310,7 @@ export const mentorSendOTPnumbReducer = createReducer(initalState, (builder) => 
          sent: true
        };
      })
-     .addCase(stusendOTPnumb.rejected, (state, action) => {
+     .addCase(mentorSendOTPnumb.rejected, (state, action) => {
        return {
          ...state,
          loading: false,

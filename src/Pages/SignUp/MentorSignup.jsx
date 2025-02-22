@@ -14,7 +14,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { clearError, otpReset, resendOTP, reset, sendOTP, signUpMentor,mentorVerifyOTPEmail,mentorVerifyOTPNumb,stusendOTPnumb,stusendOTPemail} from "../../action/userAction";
+import { clearError, otpReset, resendOTP, reset, sendOTP, signUpMentor,mentorVerifyOTPEmail,mentorVerifyOTPNumb,stusendOTPnumb,stusendOTPemail, mentorSendOTPnumb,mentorSendOTPemail} from "../../action/userAction";
 import toast from "react-hot-toast";
 import CircularProgress from "@mui/material/CircularProgress";
 import MetaData from "../../utils/Metadata";
@@ -503,7 +503,7 @@ export default function MentorSignUp() {
                               // GmailhandleClick(); 
 
                               dispatch(
-                                stusendOTPemail({
+                                mentorSendOTPemail({
                                   email: mentorInfo.email
                                 })
                               );
@@ -535,7 +535,7 @@ export default function MentorSignUp() {
 
                     {/* Verify Button */}
                     <SubButton onClick={() => {
-                      dispatch(stuVerifyOTPEmail(gmailOtp))
+                      dispatch(mentorVerifyOTPEmail(gmailOtp))
                     }
 
                     }>Verify</SubButton>
@@ -546,7 +546,7 @@ export default function MentorSignUp() {
                     loading={reLoading}
                     onClick={() => {
                       dispatch(resendOTP({
-                        email: mentorInfoInfo.email
+                        email: mentorInfo.email
                       }))
                     }}>Resend OTP</LoadingButton>
                 </Grid>
@@ -589,7 +589,7 @@ export default function MentorSignUp() {
                             onClick={() => {
                               // NumbhandleClick();
                               dispatch(
-                                stusendOTPnumb({
+                                mentorSendOTPnumb({
                                   phoneNo: mentorInfo.phoneNo
                                 })
                               );

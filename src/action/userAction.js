@@ -544,7 +544,43 @@ export const stusendOTPnumb = createAsyncThunk(
     }
   }
 );
-
+export const mentorSendOTPemail = createAsyncThunk(
+  "mentor/send/email/OTP",
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const payload = {};
+      if (email) payload.email = email; 
+      const { data } = await axiosInstance.post(
+        `/v1/mentor/send/email/otp`,
+        payload,
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+export const mentorSendOTPnumb = createAsyncThunk(
+  "mentor/send/OTP",
+  async ({ email, mobileNumber }, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const payload = {};
+      if (email) payload.email = email;
+      if (mobileNumber) payload.mobileNumber = mobileNumber;  
+      const { data } = await axiosInstance.post(
+        `/v1/mentor/send/monile/otp`,
+        payload,  
+        config
+      );
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 
 export const resendOTP = createAsyncThunk(
