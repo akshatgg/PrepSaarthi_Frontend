@@ -1,0 +1,284 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+._mentor-profile-and-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a {
+  text-decoration: none;
+}
+.css-8atqhb{
+    height: 100% !important;
+}
+.MuiTabs-indicator{
+    background-color: var(--button1) !important;
+}
+.css-187ijoe-MuiButtonBase-root-MuiTab-root.Mui-selected{
+    color: var(--button1) !important;
+}
+.a::selection
+.header__wrapper .cols__container .left__col {
+  padding: 25px 20px;
+  text-align: center;
+  max-width: 350px;
+  position: relative;
+  margin: 0 auto;
+}
+.img__container{
+    position: absolute;
+    bottom: -10vmax;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.header__wrapper .cols__container .left__col .img__container img {
+  width: 120px;
+  margin: 0 auto;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 1px 3px 12px rgba(0, 0, 0, 0.18);
+}
+.header__wrapper .cols__container .left__col .img__container span {
+  position: absolute;
+  background: #2afa6a;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  bottom: 3px;
+  right: 11px;
+  border: 2px solid #fff;
+}
+.header__wrapper .cols__container .left__col h2 {
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+.header__wrapper .cols__container .left__col p {
+  font-size: 0.9rem;
+  color: #818181;
+  margin: 0;
+}
+.header__wrapper .cols__container .left__col .about {
+  justify-content: space-between;
+  position: relative;
+  margin: 35px 0;
+}
+.header__wrapper .cols__container .left__col .about li {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1vmax;
+  color: #818181;
+  font-size: 0.9rem;
+}
+.header__wrapper .cols__container .left__col .about li span {
+  color: #1d1d1d;
+  font-weight: 600;
+}
+.header__wrapper .cols__container .left__col .about:after {
+  position: absolute;
+  content: "";
+  bottom: -16px;
+  display: block;
+  background: #cccccc;
+  height: 1px;
+  width: 100%;
+}
+.header__wrapper .cols__container .content p {
+  font-size: 1rem;
+  color: #1d1d1d;
+  line-height: 1.8em;
+}
+.header__wrapper .cols__container .content ul {
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+.header__wrapper .cols__container .content ul li {
+  display: flex;
+}
+.header__wrapper .cols__container .content ul i {
+  font-size: 1.3rem;
+}
+.header__wrapper .cols__container .right__col nav {
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.header__wrapper .cols__container .right__col nav ul {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.header__wrapper .cols__container .right__col nav ul li a {
+  text-transform: uppercase;
+  color: #818181;
+}
+.header__wrapper .cols__container .right__col nav ul li:nth-child(1) a {
+  color: #1d1d1d;
+  font-weight: 600;
+}
+.header__wrapper .cols__container .right__col nav button {
+  background: #0091ff;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.header__wrapper .cols__container .right__col nav button:hover {
+  opacity: 0.8;
+}
+.header__wrapper .cols__container .right__col .photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 20px;
+}
+.header__wrapper .cols__container .right__col .photos img {
+  max-width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+}
+.css-heg063-MuiTabs-flexContainer{
+    justify-content: center !important;
+}
+
+.left__col{
+    text-align: center;
+}
+._college-background{
+    min-width: 30vw; 
+    height: 18vmax;
+    background-color: #0091ff;
+    margin-bottom: 11vmax;
+    position: relative;
+  }
+  ._college-background > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+@media (min-width: 868px) {
+  .header__wrapper .cols__container { 
+      max-width: 100vw;
+      display: flex;
+      height: 100vh;
+      background-color: #ffffff;
+    }
+.header__wrapper .cols__container .left__col {
+    display: flex;
+    width: 30vw;
+    flex-direction: column;
+    background-color: whitesmoke;
+    margin: 1vmax;
+    align-items: center;
+  }
+  .right__col{
+    min-width: 60vw;
+    margin: 1vmax;
+    margin-left: 0 ;
+    overflow: hidden;
+  }
+  ._college-background{
+    min-width: 30vw; 
+    height: 15vmax;
+    background-color: #0091ff;
+    margin-bottom: 6vmax;
+    position: relative;
+  }
+  ._college-background > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+}
+
+@media (min-width: 1017px) {
+  .header__wrapper .cols__container .right__col nav {
+    flex-direction: row;
+  }
+  .header__wrapper .cols__container .right__col nav button {
+    margin-top: 0;
+  }
+  .img__container{
+    position: absolute;
+    bottom: -3vmax;
+}
+._college-background{
+    margin-bottom: 4vmax;
+  }
+}
+@media (max-width:1050px){
+    .header__wrapper .cols__container .left__col {
+        min-width: 40vw;
+      }
+      .right__col{
+        min-width: 50vw;
+        
+      }
+      ._college-background{
+        min-width: 40vw; 
+        height: 28vmax;
+        background-color: #0091ff;
+      }
+      .img__container{
+        position: absolute;
+        bottom: -6vmax;
+    }
+    ._college-background{
+        margin-bottom: 7vmax;
+      }
+  
+}
+/* ProgressBorder.css */
+.progress-box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.inner-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background-color: #ddd;
+}
+
+.progress-box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  border-radius: 15px;
+  box-sizing: border-box;
+  transform: rotate(90deg);
+  transform-origin: center;
+  background-image: conic-gradient(
+    #3f51b5 var(--progress),
+    transparent var(--progress)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), white calc(100% - 3px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 4px), white calc(100% - 3px));
+}

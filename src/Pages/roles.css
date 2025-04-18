@@ -1,0 +1,44 @@
+.gallery {
+    --g: 8px; /* the gap */
+    
+    display: grid;
+    clip-path: inset(1px); /* to avoid visual glitchs */
+  }
+  .gallery img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+  .gallery > div {
+    --_p: calc(-1*var(--g));
+    grid-area: 1/1;
+    width: 300px; /* control the size */
+    aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .4s .1s;
+  }
+  .gallery > div:first-child {
+    clip-path: polygon(0 0, calc(100% + var(--_p)) 0 , 0 calc(100% + var(--_p)))
+  }
+  .gallery > div:last-child {
+    clip-path: polygon(100% 100%, 100% calc(0% - var(--_p)), calc(0% - var(--_p)) 100%)
+  }
+  .gallery:hover > div:last-child,
+  .gallery:hover > div:first-child:hover{
+    --_p: calc(50% - var(--g));
+  }
+  .gallery:hover > div:first-child,
+  .gallery:hover > div:first-child:hover + div{
+    --_p: calc(-50% - var(--g));
+  }
+  
+  
+@media (min-width:800px){
+    .gallery > div {
+        width: 41vmax; /* control the size */
+
+    }
+}

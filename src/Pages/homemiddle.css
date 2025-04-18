@@ -1,0 +1,199 @@
+._home-middle {
+  max-width: 100vw;
+  min-height: 100vh;
+}
+
+._home-middle-heading {
+  text-align: center;
+  color: #333333;
+  font-size: 2.6vmax;
+  font-weight: 900;
+  margin: 4vmax;
+  position: relative;
+}
+._home-middle-heading::after {
+  content: "";
+  width: 8%;
+  height: 8px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  background-color: #3a5aff;
+}
+._mentor-card {
+  position: relative;
+  max-width: 90%;
+  overflow: hidden;
+  border-radius: 0.8vmax;
+  display: flex;
+  height: 20vmax;
+  margin: 0 auto;
+}
+.swiper-slide:nth-child(2) ._mentor-card {
+  background-color: #0542b9 !important;
+}
+.swiper-slide:nth-child(1) ._mentor-card {
+  background-color: #ffc00a;
+}
+.swiper-slide:nth-child(3) ._mentor-card {
+  background-color: #2f281e;
+}
+.swiper-slide:nth-child(4) ._mentor-card {
+  background-color: #3bc5ff;
+}
+.swiper-slide:nth-child(2) ._mentor-card > ._home-miidle-mentor-info p {
+  color: #ffffff !important;
+}
+.swiper-slide:nth-child(1) ._mentor-card > ._home-miidle-mentor-info p {
+  color: #333333 !important;
+}
+.swiper-slide:nth-child(3) ._mentor-card > ._home-miidle-mentor-info p {
+  color: #ffffff !important;
+}
+.swiper-slide:nth-child(4) ._mentor-card > ._home-miidle-mentor-info p {
+  color: #333333 !important;
+}
+
+.swiper-slide:nth-child(2) ._mentor-card > ._home-miidle-mentor-info h2 {
+  color: #ffffff !important;
+}
+.swiper-slide:nth-child(1) ._mentor-card > ._home-miidle-mentor-info h2 {
+  color: #333333 !important;
+}
+.swiper-slide:nth-child(3) ._mentor-card > ._home-miidle-mentor-info h2 {
+  color: #ffffff !important;
+}
+.swiper-slide:nth-child(4) ._mentor-card > ._home-miidle-mentor-info h2 {
+  color: #333333 !important;
+}
+.swiper-slide:nth-child(2) ._mentor-card > ._home-miidle-mentor-info a {
+  color: #ffffff !important;
+}
+.swiper-slide:nth-child(1) ._mentor-card > ._home-miidle-mentor-info a {
+  color: #333333 !important;
+}
+.swiper-slide:nth-child(3) ._mentor-card > ._home-miidle-mentor-info a {
+  color: #ffffff !important;
+}
+.swiper-slide:nth-child(4) ._mentor-card > ._home-miidle-mentor-info a {
+  color: #333333 !important;
+}
+
+._home-miidle-mentor-info {
+  width: 60%;
+  padding: 3vmax 2vmax;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+._home-miidle-mentor-info > h2 {
+  font-size: 2.4vmax;
+  margin-bottom: 1vmax;
+  font-weight: 800;
+}
+
+._home-miidle-mentor-info > p {
+  font-size: 1.2vmax;
+  font-weight: 400;
+}
+._home-miidle-mentor-info > a {
+  font-size: 1.2vmax;
+  font-weight: 700;
+  margin-top: 4vmax;
+}
+
+._home-miidle-mentor-img {
+  width: 40%;
+  height: 100%;
+}
+._home-miidle-mentor-img > img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+}
+.mySwiper {
+  height: 25vmax;
+}
+
+.swiper-pagination span {
+  width: 1vmax !important;
+  height: 1vmax !important;
+}
+.css-46bh2p-MuiCardContent-root {
+  /* padding: 0px !important; */
+}
+._how-work {
+  margin-top: 8vmax;
+  display: grid;
+  gap:15px;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+}
+
+/* ._working-disc {
+  flex: 0.5;
+}
+._working-image {
+  flex: 0.4;
+  padding: 0 4vmax;
+} */
+/* ._working img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+._working h2 {
+  font-size: 2vmax;
+  font-weight: 800;
+  color: #333333;
+  margin-bottom: 0.2vmax;
+}
+
+._working p {
+  font-size: 2vmax;
+  font-weight: 500;
+  line-height: 1.8;
+  padding: 0 7vmax 0 0;
+  color: #544837ca;
+} */
+._how-work2 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, auto);
+}
+@media (max-width: 850px) {
+  ._how-work {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(8, auto);
+  }
+  ._working {
+    flex-direction: column;
+    height: 30vmax;
+    align-items: center;
+    margin-top: 1vmax;
+  }
+  ._working-image {
+    flex: 1;
+    padding: 0;
+    width: 50%;
+    height: 50%;
+  }
+  ._working-disc {
+    text-align: center;
+  }
+  ._working p {
+    padding: 0;
+  }
+  ._home-middle-heading::after {
+    width: 25%;
+  }
+  ._mentor-card {
+    max-width: 90vw;
+  }
+}

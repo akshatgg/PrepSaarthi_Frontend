@@ -1,0 +1,11 @@
+.video-responsive {
+  padding: 0.3vmax;
+  height: 100%;
+}
+.video-responsive iframe{
+    border-radius: 1vmax;
+    outline: none;
+    border: 0;
+    height: 100%;
+}
+

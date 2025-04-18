@@ -1,0 +1,29 @@
+
+
+
+:root {
+    --text1: #2f281e;
+    --text2:#333333;
+    --button1:#ffc43b;
+    --button1Hover:#f6c654;
+    --button2:#3a5aff;
+    --theme2:#1976d2;
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none ;
+}
+.css-6hp17o-MuiList-root-MuiMenu-list{
+    flex-direction: column;
+}
+._mentor-profile-and-name, ul {
+    align-items: center;
+    display: flex;
+    flex-direction: column !important; 
+}
