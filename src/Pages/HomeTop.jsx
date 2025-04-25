@@ -14,6 +14,7 @@ import BlobButton from '../Components/BlobButton/BlobButton.jsx';
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useTheme, useMediaQuery} from "@mui/material";
 
 import LineButton from "../Components/LineButton/LineButton.jsx";
 
@@ -53,6 +54,7 @@ const HomeTop = () => {
   const { loading: stuLoading, isAuthenticated } = useSelector(
     (state) => state.student
   );
+  const isMobile = useMediaQuery("(max-width:600px)");
   // const [, setSrc] = useState(window.innerWidth)
   // const [src, setSrc] = useState(window.innerWidth)
   // useEffect(() => {
@@ -149,7 +151,7 @@ const HomeTop = () => {
               flexDirection: { xs: "column", md: "row" },
               justifyContent: { xs: "center", md: "space-between" },
               alignItems: "center",
-              gap: { xs: 2, md: 3 },
+              gap: { xs: 4, md: 3 },
               mt: 3,
               width: "100%",
             }}
@@ -210,22 +212,42 @@ const HomeTop = () => {
                   },
                 }}
               >
-                Explore Your Mentor
+                Connect with Mentor
               </Button>
             </Box>
 
             {/* Products Button */}
             <Box
-              className="secBtn"
-              sx={{
-                textAlign: "center",
-                width: "19vmax",
-                height: "5vmax",
-              }}
-              onClick={handleOpen}
-            >
-              <BlobButton text="Products" />
-            </Box>
+  className="secBtn"
+  sx={{
+    textAlign: "center",
+    width: "19vmax",
+    height: "5vmax",
+  }}
+  onClick={handleOpen}
+>
+  {isMobile ? (
+    <Button
+      variant="contained"
+      fullWidth
+      sx={{
+        fontSize: "1.5vmax",
+        backgroundColor: "#F8CB3A",
+        color: "white",
+        fontWeight: "bold",
+        "&:hover": {
+          backgroundColor: "#e6c200", // a darker yellow for hover
+        },
+        height: "100%",
+        borderRadius: "2vmax",
+      }}
+    >
+      Products
+    </Button>
+  ) : (
+    <BlobButton text="Products" />
+  )}
+</Box>
           </Box>
 
 
