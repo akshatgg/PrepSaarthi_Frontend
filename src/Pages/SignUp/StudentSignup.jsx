@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -28,6 +28,7 @@ import { styled } from '@mui/system';
 // import OTP from "../../Components/OTPstr/OTPstr";
 import { Button as BaseButton, buttonClasses } from '@mui/base/Button';
 import Stack from '@mui/material/Stack';
+import { use } from "react";
 
 
 const defaultTheme = createTheme();
@@ -226,7 +227,8 @@ export default function StudentSignUp() {
     success: otpNumbSuccess,
     sent: numbsent
   } = useSelector((state) => state.newStuOTPsendnumb);
-
+  const { success: verifySuccess, loading: verifyLoading,status:status } = useSelector((state) => state.stuverify);
+  const { success: verifySuccessnumb, loading: verifyLoadingnumb,status:statusnumb } = useSelector((state) => state.verifymobileotp);
   const {
     loading: reLoading,
     success: reSuccess,
@@ -236,7 +238,6 @@ export default function StudentSignUp() {
     (state) => state.student
   );
   //loading
-
   const [Numbloading, NumbsetLoading] = React.useState(false);
   const [NumbOtpBoxes, setNumbOtpBoxes] = React.useState(false);
   const [NumbOtp, setNumbOtp] = React.useState('');
@@ -248,6 +249,7 @@ export default function StudentSignUp() {
 
     }, 1000)
   }
+
   const [Gmailloading, GmailsetLoading] = React.useState(false);
   const [GmailOTPBoxes, setGmailOTPBoxes] = React.useState(false);
   const [gmailOtp, setgmailOtp] = React.useState('');
@@ -257,7 +259,7 @@ export default function StudentSignUp() {
       GmailsetLoading(false);
       setGmailOTPBoxes(true);
     }, 1000)
-
+    
   }
   const navigate = useNavigate();
   const [studentInfo, setstudentInfo] = React.useState({});
@@ -268,7 +270,7 @@ export default function StudentSignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const studentInformation = new FormData();
-
+    
     studentInformation.set("name", studentInfo.fullName);
     studentInformation.set("email", studentInfo.email);
     studentInformation.set("mobileNumber", studentInfo.phoneNo);
@@ -276,18 +278,19 @@ export default function StudentSignUp() {
     studentInformation.set("emailOTP", studentInfo.emailOTP);
     studentInformation.set("numberOTP", studentInfo.numberOTP);
     studentInformation.set("avatar", avatar);
-
+    
     const serializedData = {};
     studentInformation.forEach((value, key) => {
       serializedData[key] = value;
     });
     dispatch(signUpStudent(serializedData));
   };
-
+  
   const [prgress, setProgress] = React.useState(0);
   const [success, setSuccess] = React.useState(false);
   const [uploading, setuploading] = React.useState(false);
-
+  const [emailverifyblock, setEmailverifyblock] = React.useState(false);
+  
   {/* Adding Password Validation By Rajendra Jat */ }
 
   const [passwordCriteria, setPasswordCriteria] = React.useState({
@@ -298,6 +301,15 @@ export default function StudentSignUp() {
   }); //Password Hint
   const [password, setPassword] = useState("");
   const [isHintVisible, setIsHintVisible] = useState(false);
+  useEffect(() => {
+   console.log("🚀 ~ file: StudentSignup.jsx:163 ~ useEffect ~ status:",verifySuccess );
+   console.log("🚀 ~ file: StudentSignup.jsx:163 ~ useEffect ~ emailsent:", emailsent);
+  }, [status, emailsent]);
+
+  // 📦 Debug state change for emailverifyblock
+  useEffect(() => {
+    console.log("📦 emailverifyblock state changed:", emailverifyblock);
+  }, [emailverifyblock]);
 
   React.useEffect(() => {
     if (prgress === 100) {
@@ -362,11 +374,14 @@ export default function StudentSignUp() {
       [event.target.name]: event.target.value,
     });
   };
+
   React.useEffect(() => {
     if (otpSuccess) {
       toast.success("OTP has been sent to your submitted email and mobile number")
       dispatch(reset())
     }
+ 
+
     if (otpError) {
       toast.error(otpError.message)
       dispatch(otpClearError())
@@ -498,39 +513,63 @@ export default function StudentSignUp() {
                 </Grid>
 
 
-                <Grid item xs={12} sx={emailsent ? { display: 'block' } : { display: 'none' }}>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {/* OTP Input */}
-                    <OTP
-                      name="emailOTP"
-                      id="emailOTP"
-                      autoComplete="emailOTP"
-                      separator={<span>-</span>}
-                      value={gmailOtp}
-                      onChange={(otp) => {
-                        handleChange();
-                        setgmailOtp(otp)
-                      }}
-                      length={5}
-                    />
+                
+                {emailsent && !status && (
+  <Grid item xs={12} sx={{ display: 'block' }}>
+    <Stack direction="row" spacing={2} alignItems="center">
+      <OTP
+        name="emailOTP"
+        id="emailOTP"
+        autoComplete="emailOTP"
+        separator={<span>-</span>}
+        value={gmailOtp}
+        onChange={(otp) => {
+          setgmailOtp(otp);
+          setstudentInfo({
+            ...studentInfo,
+            emailOTP: otp
+          });
+        }}
+        length={5}
+        disabled={verifySuccess} // Disable OTP input after verified
+      />
 
-                    {/* Verify Button */}
-                    <SubButton onClick={() => {
-                      dispatch(stuVerifyOTPEmail(gmailOtp))
-                    }
+      <SubButton 
+        onClick={() => {
+          dispatch(stuVerifyOTPEmail({ otp: gmailOtp, email: studentInfo.email }));
+        }}
+        disabled={verifySuccess}
+        sx={{
+          backgroundColor: verifySuccess ? 'green' : '#1976d2',
+          color: '#fff',
+          '&:hover': {
+            backgroundColor: verifySuccess ? 'darkgreen' : '#115293'
+          }
+        }}
+      >
+        {verifySuccess ? "✓ Verified" : "Verify"}
+      </SubButton>
+    </Stack>
 
-                    }>Verify</SubButton>
-                  </Stack>
-
-
-                  <LoadingButton
-                    loading={reLoading}
-                    onClick={() => {
-                      dispatch(sturesendOTP({
-                        email: studentInfo.email
-                      }))
-                    }}>Resend OTP</LoadingButton>
-                </Grid>
+    <LoadingButton
+      loading={reLoading}
+      disabled={verifySuccess || status}
+      onClick={() => {
+        dispatch(sturesendOTP({ email: studentInfo.email }));
+      }}
+      sx={{
+        mt: 1,
+        color: '#fff',
+        backgroundColor: verifySuccess ? 'grey' : '#f50057',
+        '&:hover': {
+          backgroundColor: verifySuccess ? 'grey' : '#c51162'
+        }
+      }}
+    >
+      Resend OTP
+    </LoadingButton>
+  </Grid>
+)}
 
 
 
@@ -559,7 +598,7 @@ export default function StudentSignUp() {
                               // NumbhandleClick();
                               dispatch(
                                 stusendOTPnumb({
-                                  phoneNo: studentInfo.phoneNo
+                                  mobileNumber: studentInfo.phoneNo
                                 })
                               );
                             }
@@ -584,36 +623,49 @@ export default function StudentSignUp() {
         onChange={handleChange}
       />
     </Grid> */}
-                <Grid item xs={12} sx={numbsent ? { display: 'block' } : { display: 'none' }}>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {/* OTP Input */}
-                    <OTP
-                      id="numberOTP"
-                      name="numberOTP"
-                      separator={<span>-</span>}
-                      value={NumbOtp}
-                      onChange={(otp) => {
-                        handleChange();
-                        setNumbOtp(otp)
-                      }}
-                      length={5}
-                    />
 
-                    {/* Button */}
-                    <SubButton
-                      onClick={() => {
-                        dispatch(stuVerifyOTPNumb(NumbOtp))
-                      }}
-                    >Verify</SubButton>
-                  </Stack>
-                  <LoadingButton
-                    loading={reLoading}
-                    onClick={() => {
-                      dispatch(sturesendOTP({
-                        mobileNumber: studentInfo.phoneNo
-                      }))
-                    }}>Resend OTP</LoadingButton>
-                </Grid>
+    {numbsent && !statusnumb && (
+        <Grid item xs={12} sx={ { display: 'block' } }>
+        <Stack direction="row" spacing={2} alignItems="center">
+          {/* OTP Input */}
+          <OTP
+            id="numberOTP"
+            name="numberOTP"
+            separator={<span>-</span>}
+            value={NumbOtp}
+            onChange={(otp) => {
+              handleChange();
+              setNumbOtp(otp)
+            }}
+            length={5}
+            disabled={verifySuccessnumb} // Disable OTP input after verified
+          />
+
+          {/* Button */}
+          <SubButton
+            onClick={() => {
+              dispatch(stuVerifyOTPNumb({mobileNumber:studentInfo.phoneNo,otp:NumbOtp}))
+            }}
+            disabled={verifySuccessnumb}
+            sx={{
+              backgroundColor: verifySuccess ? 'green' : '#1976d2',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: verifySuccess ? 'darkgreen' : '#115293'
+              }
+            }}
+          >Verify</SubButton>
+        </Stack>
+        <LoadingButton
+          loading={reLoading}
+          onClick={() => {
+            dispatch(sturesendOTP({
+              mobileNumber: studentInfo.phoneNo
+            }))
+          }}>Resend OTP</LoadingButton>
+      </Grid>
+    
+       ) }       
 
 
 
@@ -757,35 +809,31 @@ export default function StudentSignUp() {
                     </Button>
                   </Box>
                   <Grid item xs={12}>
-                    <LoadingButton
-                      // loading={otpLoading}
-                      // onClick={() => {
-                      //   dispatch(
-                      //     stusendOTP({
-                      //       email: studentInfo.email,
-                      //       mobileNumber: studentInfo.phoneNo,
-                      //     })
-                      //   );
-                      // }}
-                      onClick={handleSubmit}
-                      type="submit"
-                      fullWidth
-                      loading={loading}
-                      disabled={uploading}
-                      sx={!sent ? {
-                        display: 'block',
-                        mt: 3,
-                        mb: 2,
-                        color: 'white',
-                        p: "0.8vmax 0",
-                        fontSize: { xs: "2.3vmax", md: "2vmax", lg: "1.1vmax" },
-                        bgcolor: "var(--button1)",
-                        "&:hover": { backgroundColor: "var(--button1Hover)" },
-                      } : { display: "none" }}
-                    >
-                      Sign Up
-                    </LoadingButton>
-                  </Grid>
+  <LoadingButton
+    onClick={handleSubmit}
+    type="submit"
+    fullWidth
+    loading={loading}
+    disabled={uploading || !status || !statusnumb}
+    sx={
+      !sent
+        ? {
+            display: 'block',
+            mt: 3,
+            mb: 2,
+            color: 'white',
+            p: "0.8vmax 0",
+            fontSize: { xs: "2.3vmax", md: "2vmax", lg: "1.1vmax" },
+            bgcolor: "var(--button1)",
+            "&:hover": { backgroundColor: "var(--button1Hover)" },
+          }
+        : { display: "none" }
+    }
+  >
+    Sign Up
+  </LoadingButton>
+</Grid>
+
                   {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <TextField
                     required
@@ -799,7 +847,7 @@ export default function StudentSignUp() {
                 </Grid> */}
 
                 </Grid>
-                {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
+                <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <Typography variant="p">
                     By signing up you are agreeing to our{" "}
                     <Link style={{ textDecoration: "underline" }} to="/privacy">
@@ -807,23 +855,24 @@ export default function StudentSignUp() {
                     </Link>
                   </Typography>
                   <LoadingButton
-                type="submit"
-                fullWidth
-                variant="contained"
-                loading={loading}
-                disabled={uploading}
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  p: "0.8vmax 0",
-                  fontSize: { xs: "2.3vmax", md: "2vmax", lg: "1.1vmax" },
-                  bgcolor: "var(--button1)",
-                  "&:hover": { backgroundColor: "var(--button1Hover)" },
-                }}
-              >
-                Sign Up
-              </LoadingButton>
-                </Grid> */}
+  type="submit"
+  fullWidth
+  variant="contained"
+  loading={loading}
+  disabled={uploading || !status || !statusnumb}
+  sx={{
+    mt: 3,
+    mb: 2,
+    p: "0.8vmax 0",
+    fontSize: { xs: "2.3vmax", md: "2vmax", lg: "1.1vmax" },
+    bgcolor: "var(--button1)",
+    "&:hover": { backgroundColor: "var(--button1Hover)" },
+  }}
+>
+  Sign Up
+</LoadingButton>
+
+                </Grid>
 
               </Grid>
 

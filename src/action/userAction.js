@@ -526,12 +526,10 @@ export const stusendOTPemail = createAsyncThunk(
 );
 export const stusendOTPnumb = createAsyncThunk(
   "student/send/OTP",
-  async ({ email, mobileNumber }, { rejectWithValue }) => {
+  async ({ mobileNumber }, { rejectWithValue }) => {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
-      const payload = {};
-      if (email) payload.email = email;
-      if (mobileNumber) payload.mobileNumber = mobileNumber;
+      const payload = { mobileNumber };
 
       const { data } = await axiosInstance.post(
         `/v1/student/send/mobile/otp`,
@@ -540,10 +538,13 @@ export const stusendOTPnumb = createAsyncThunk(
       );
       return data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      console.error("OTP send error:", err);
+      return rejectWithValue(err.response?.data || { message: "Unknown error" });
     }
   }
 );
+
+
 export const mentorSendOTPemail = createAsyncThunk(
   "mentor/send/email/OTP",
   async ({ email }, { rejectWithValue }) => {
@@ -562,25 +563,7 @@ export const mentorSendOTPemail = createAsyncThunk(
     }
   }
 );
-export const mentorSendOTPnumb = createAsyncThunk(
-  "mentor/send/OTP",
-  async ({ email, mobileNumber }, { rejectWithValue }) => {
-    try {
-      const config = { headers: { "Content-Type": "application/json" } };
-      const payload = {};
-      if (email) payload.email = email;
-      if (mobileNumber) payload.mobileNumber = mobileNumber;  
-      const { data } = await axiosInstance.post(
-        `/v1/mentor/send/monile/otp`,
-        payload,  
-        config
-      );
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
+
 
 
 export const resendOTP = createAsyncThunk(
@@ -655,28 +638,53 @@ export const stuVerifyOTP = createAsyncThunk(
 
 export const stuVerifyOTPEmail = createAsyncThunk(
   "student/verify/emailOTP",
-  async (otp, { rejectWithValue }) => {
+  async ({ otp, email }, { rejectWithValue }) => {
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
       const { data } = await axiosInstance.post(
         `/v1/student/verify/emailotp`,
-        { otp: otp },
+        { otp, email },
         config
       );
       return data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data || { message: "Something went wrong" });
     }
   }
 );
+
+export const mentorSendOTPnumb = createAsyncThunk(
+  "mentor/send/OTP",
+  async ({mobileNumber }, { rejectWithValue }) => {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const payload = { mobileNumber };
+      const { data } = await axiosInstance.post(
+        `/v1/mentor/send/mobile/otp`, // ✅ fixed typo
+        {mobileNumber }, 
+        payload,            // ✅ sending mobileNumber only
+        config
+      );
+
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || "Something went wrong");
+    }
+  }
+);
+
+
+
 export const stuVerifyOTPNumb = createAsyncThunk(
   "student/verify/numbOTP",
-  async (otp, { rejectWithValue }) => {
+  async ({otp,mobileNumber}, { rejectWithValue }) => {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axiosInstance.post(
         `/v1/student/verify/numbotp`,
-        { otp: otp },
+        { otp,mobileNumber },
         config
       );
       return data;
@@ -687,12 +695,16 @@ export const stuVerifyOTPNumb = createAsyncThunk(
 );
 export const mentorVerifyOTPEmail = createAsyncThunk(
   "mentor/verify/emailOTP",
-  async (otp, { rejectWithValue }) => {
+  async ({otp,email}, { rejectWithValue }) => {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axiosInstance.post(
         `/v1/mentor/verify/emailotp`,
-        { otp: otp },
+        { 
+          otp,email
+         
+         },
+        
         config
       );
       return data;
@@ -703,12 +715,12 @@ export const mentorVerifyOTPEmail = createAsyncThunk(
 );
 export const mentorVerifyOTPNumb = createAsyncThunk(
   "mentor/verify/numbOTP",
-  async (otp, { rejectWithValue }) => {
+  async ({otp,mobileNumber}, { rejectWithValue }) => {
     try {
       const config = { headers: { "Content-Type": "application/json" } };
       const { data } = await axiosInstance.post(
         `/v1/mentor/verify/mobileotp`,
-        { otp: otp },
+        { otp ,mobileNumber},
         config 
       );
       return data;

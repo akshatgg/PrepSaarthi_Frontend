@@ -34,11 +34,13 @@ import {
   resendOTP,
   reset,
   resetPassword,
+  stuVerifyOTPNumb,
   resolveConnection,
   sendOTP,
   signUpMentor,
   stuVerifyOTP,
   sturesendOTP,
+  mentorVerifyOTPNumb,
   stusendOTP,
   stusendOTPemail,
   stusendOTPnumb,
@@ -55,6 +57,8 @@ import {
   updateStatusHeadMentor,
   uploadNotes,
   verifyOTP,
+  stuVerifyOTPEmail,
+  mentorVerifyOTPEmail
 } from "../action/userAction";
 
 const initalState = {};
@@ -1102,6 +1106,33 @@ export const sendOTPReducer = createReducer(initalState, (builder) => {
       };
     });
 });
+export const verifymobileotpReducer = createReducer(initalState, (builder) => {
+  builder
+    .addCase(stuVerifyOTPNumb.pending, (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    })
+    .addCase(stuVerifyOTPNumb.fulfilled, (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.status,
+        message: action.payload.message,
+        status: true,
+        user: action.payload.user,
+      };
+    })
+    .addCase(stuVerifyOTPNumb.rejected, (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        status: false,
+      };
+    })    
+  });
 export const stuSendOTPReducer = createReducer(initalState, (builder) => {
   builder
 
@@ -1173,6 +1204,7 @@ export const stuSendOTPnumbReducer = createReducer(initalState, (builder) => {
       ...state,
       loading: false,
       error: action.payload,
+      sent: false
     };
   })
   .addCase(reset.fulfilled, (state, action) => {
@@ -1340,7 +1372,103 @@ export const mentorSendOTPnumbReducer = createReducer(initalState, (builder) => 
 }); 
 
 
+export const mentorverifyemailotp = createReducer(initalState, (builder) => {
+  builder
 
+   .addCase(mentorVerifyOTPEmail.pending, (state, action) => {
+       return {
+         ...state,
+         loading: true,
+       };
+     })
+     .addCase(mentorVerifyOTPEmail.fulfilled, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         success: action.payload.status,
+         message: action.payload.message,
+         status: true
+       };
+     })
+     .addCase(mentorVerifyOTPEmail.rejected, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         error: action.payload,
+         status:false
+       };
+     })
+     .addCase(reset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         success: null,
+         message: null,
+       };
+     })
+     .addCase(otpReset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         sent: false
+       };
+     })
+   
+     .addCase(clearError.fulfilled, (state, action) => {
+       return {
+         ...state,
+         error: null,
+       };
+     });
+}
+);
+
+export const mentorverifynumbotp = createReducer(initalState, (builder) => {
+  builder
+
+   .addCase(mentorVerifyOTPNumb.pending, (state, action) => {
+       return {
+         ...state,
+         loading: true,
+       };
+     })
+     .addCase(mentorVerifyOTPNumb.fulfilled, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         success: action.payload.status,
+         message: action.payload.message,
+         status: true
+       };
+     })
+     .addCase(mentorVerifyOTPNumb.rejected, (state, action) => {
+       return {
+         ...state,
+         loading: false,
+         error: action.payload,
+         status:false
+       };
+     })
+     .addCase(reset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         success: null,
+         message: null,
+       };
+     })
+     .addCase(otpReset.fulfilled, (state, action) => {
+       return {
+         ...state,
+         sent: false
+       };
+     })
+   
+     .addCase(clearError.fulfilled, (state, action) => {
+       return {
+         ...state,
+         error: null,
+       };
+     });
+}
+);
 
 export const reSendOTPReducerStu = createReducer(initalState, (builder) => {
   builder
@@ -1483,14 +1611,16 @@ export const verifyOTPReducer = createReducer(initalState, (builder) => {
       return {
         ...state,
         loading: true,
+        
       };
     })
     .addCase(verifyOTP.fulfilled, (state, action) => {
       return {
-        ...state,
+        ...state, 
         loading: false,
         success: action.payload.status,
         message: action.payload.message,
+       
       };
     })
     .addCase(verifyOTP.rejected, (state, action) => {
@@ -1498,12 +1628,14 @@ export const verifyOTPReducer = createReducer(initalState, (builder) => {
         ...state,
         loading: false,
         error: action.payload,
+        
       };
     })
     .addCase(stuVerifyOTP.pending, (state, action) => {
       return {
         ...state,
         loading: true,
+        
       };
     })
     .addCase(stuVerifyOTP.fulfilled, (state, action) => {
@@ -1512,6 +1644,7 @@ export const verifyOTPReducer = createReducer(initalState, (builder) => {
         loading: false,
         success: action.payload.status,
         message: action.payload.message,
+        sent: true
       };
     })
     .addCase(stuVerifyOTP.rejected, (state, action) => {
@@ -1519,6 +1652,7 @@ export const verifyOTPReducer = createReducer(initalState, (builder) => {
         ...state,
         loading: false,
         error: action.payload,
+        sent: false
       };
     })
     .addCase(reset.fulfilled, (state, action) => {
@@ -1535,6 +1669,73 @@ export const verifyOTPReducer = createReducer(initalState, (builder) => {
       };
     });
 });
+
+export const StuverifyOTPReducer = createReducer(initalState, (builder) => {
+  builder
+
+    // .addCase(stuVerifyOTPEmail.pending, (state, action) => {
+    //   return {
+    //     ...state,
+    //     loading: true,
+        
+    //   };
+    // })
+    // .addCase(verifyOTP.fulfilled, (state, action) => {
+    //   return {
+    //     ...state, 
+    //     loading: false,
+    //     success: action.payload.status,
+    //     message: action.payload.message,
+       
+    //   };
+    // })
+    // .addCase(verifyOTP.rejected, (state, action) => {
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     error: action.payload,
+        
+    //   };
+    // })
+    .addCase(stuVerifyOTPEmail.pending, (state, action) => {
+      return {
+        ...state,
+        loading: true,
+        
+      };
+    })
+    .addCase(stuVerifyOTPEmail.fulfilled, (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        success: action.payload.status,
+        message: action.payload.message,
+        status: true
+      };
+    })
+    .addCase(stuVerifyOTPEmail.rejected, (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        status: false
+      };
+    })
+    .addCase(reset.fulfilled, (state, action) => {
+      return {
+        ...state,
+        success: null,
+        message: null,
+      };
+    })
+    .addCase(clearError.fulfilled, (state, action) => {
+      return {
+        ...state,
+        error: null,
+      };
+    });
+});
+
 export const resetPasswordReducer = createReducer(initalState, (builder) => {
   builder
 
@@ -1915,19 +2116,4 @@ export const notificationUser = createReducer(initalState, (builder) => {
       };
     });
 });
-// export const chatStudent = createReducer(initalState, (builder) => {
-//   builder
 
-//     // .addCase(reset.fulfilled, (state, action) => {
-//     //   return {
-//     //     ...state,
-//     //     success: null,
-//     //   };
-//     // })
-//     .addCase(clearError.fulfilled, (state, action) => {
-//       return {
-//         ...state,
-//         error: null,
-//       };
-//     });
-// });

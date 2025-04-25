@@ -235,6 +235,9 @@ export default function MentorSignUp() {
     error: reError,
   } = useSelector((state) => state.resendOtherOTP);
 
+  const {success: verifySuccess, loading: verifyLoading,status:status} = useSelector((state) => state.mentorverifyemailOTP);
+    const { success: verifySuccessnumb, loading: verifyLoadingnumb,status:statusnumb } = useSelector((state) => state.verifymentormobOTP);
+
     const [Numbloading, NumbsetLoading] = React.useState(false);
     const [NumbOtpBoxes, setNumbOtpBoxes] = React.useState(false);
       const [NumbOtp, setNumbOtp] = React.useState('');
@@ -517,39 +520,55 @@ export default function MentorSignUp() {
                   />
                 </Grid>
                 
-                <Grid item xs={12} sx={emailsent ? { display: 'block' } : { display: 'none' }}>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {/* OTP Input */}
-                    <OTP
-                      name="emailOTP"
-                      id="emailOTP"
-                      autoComplete="emailOTP"
-                      separator={<span>-</span>}
-                      value={gmailOtp}
-                      onChange={(otp) => {
-                        handleChange();
-                        setgmailOtp(otp)
-                      }}
-                      length={5}
-                    />
+                {emailsent && !status && (
+  <Grid item xs={12} sx={{ display: 'block' }}>
+    <Stack direction="row" spacing={2} alignItems="center">
+      {/* OTP Input */}
+      <OTP
+        name="emailOTP"
+        id="emailOTP"
+        autoComplete="emailOTP"
+        separator={<span>-</span>}
+        value={gmailOtp}
+        onChange={(otp) => {
+          handleChange();
+          setgmailOtp(otp);
+        }}
+        length={5}
+        disabled={verifySuccess} // Disable input after verification
+      />
 
-                    {/* Verify Button */}
-                    <SubButton onClick={() => {
-                      dispatch(mentorVerifyOTPEmail(gmailOtp))
-                    }
+      {/* Verify Button */}
+      <SubButton
+        onClick={() => {
+          dispatch(mentorVerifyOTPEmail({ otp: gmailOtp, email: mentorInfo.email }));
+        }}
+        disabled={verifySuccess}
+        sx={{
+          backgroundColor: verifySuccess ? 'green' : '#1976d2',
+          color: '#fff',
+          '&:hover': {
+            backgroundColor: verifySuccess ? 'darkgreen' : '#115293'
+          }
+        }}
+      >
+        {verifySuccess ? "✓ Verified" : "Verify"}
+      </SubButton>
+    </Stack>
 
-                    }>Verify</SubButton>
-                  </Stack>
+    {/* Resend OTP Button */}
+    <LoadingButton
+      loading={reLoading}
+      onClick={() => {
+        dispatch(resendOTP({ email: mentorInfo.email }));
+      }}
+      disabled={verifySuccess} // Disable resend after verification
+    >
+      Resend OTP
+    </LoadingButton>
+  </Grid>
+)}
 
-
-                  <LoadingButton
-                    loading={reLoading}
-                    onClick={() => {
-                      dispatch(resendOTP({
-                        email: mentorInfo.email
-                      }))
-                    }}>Resend OTP</LoadingButton>
-                </Grid>
 
 
 
@@ -590,7 +609,8 @@ export default function MentorSignUp() {
                               // NumbhandleClick();
                               dispatch(
                                 mentorSendOTPnumb({
-                                  phoneNo: mentorInfo.phoneNo
+                                  mobileNumber: mentorInfo.phoneNo,
+                                 
                                 })
                               );
                             }
@@ -604,36 +624,48 @@ export default function MentorSignUp() {
                   />
                 </Grid>
 
-                <Grid item xs={12} sx={numbsent ? { display: 'block' } : { display: 'none' }}>
-                  <Stack direction="row" spacing={2} alignItems="center">
-                    {/* OTP Input */}
-                    <OTP
-                      id="numberOTP"
-                      name="numberOTP"
-                      separator={<span>-</span>}
-                      value={NumbOtp}
-                      onChange={(otp) => {
-                        handleChange();
-                        setNumbOtp(otp)
-                      }}
-                      length={5}
-                    />
+                {numbsent && !statusnumb && (
+ <Grid item xs={12} sx={ { display: 'block' }}>
+ <Stack direction="row" spacing={2} alignItems="center">
+   {/* OTP Input */}
+   <OTP
+     id="numberOTP"
+     name="numberOTP"
+     separator={<span>-</span>}
+     value={NumbOtp}
+     onChange={(otp) => {
+       handleChange();
+       setNumbOtp(otp)
+     }}
+     length={5}
+     disabled={verifySuccessnumb} // Disable input after verification
+   />
 
-                    {/* Button */}
-                    <SubButton
-                      onClick={() => {
-                        dispatch(mentorVerifyOTPNumb(NumbOtp))
-                      }}
-                    >Verify</SubButton>
-                  </Stack>
-                  <LoadingButton
-                    loading={reLoading}
-                    onClick={() => {
-                      dispatch(resendOTP({
-                        mobileNumber: mentorInfo.phoneNo
-                      }))
-                    }}>Resend OTP</LoadingButton>
-                </Grid>
+   {/* Button */}
+   <SubButton
+     onClick={() => {
+       dispatch(mentorVerifyOTPNumb({otp:NumbOtp,mobileNumber: mentorInfo.phoneNo}));
+     }}
+     disabled={verifySuccessnumb}
+     sx={{
+      backgroundColor: verifySuccess ? 'green' : '#1976d2',
+      color: '#fff',
+      '&:hover': {
+        backgroundColor: verifySuccess ? 'darkgreen' : '#115293'
+      }
+    }}
+   >Verify</SubButton>
+ </Stack>
+ <LoadingButton
+   loading={reLoading}
+   onClick={() => {
+     dispatch(resendOTP({
+       mobileNumber: mentorInfo.phoneNo
+     }))
+   }}>Resend OTP</LoadingButton>
+</Grid>
+                )}
+               
 
                 <Grid item xs={12}>
                   <TextField
@@ -797,7 +829,7 @@ export default function MentorSignUp() {
                     onClick={handleSubmit}
                     fullWidth
                     loading={loading}
-                    disabled={uploading}
+                    disabled={uploading || !status || !statusnumb}
                     sx={!sent ? {
                       display:'block',
                       mt: 3,
@@ -812,7 +844,7 @@ export default function MentorSignUp() {
                    Sign Up
                   </LoadingButton>
                 </Grid>
-                <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
+                {/* <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <TextField
                     required
                     fullWidth
@@ -839,7 +871,7 @@ export default function MentorSignUp() {
                     dispatch(resendOTP({email: mentorInfo.email,
                       mobileNumber: mentorInfo.phoneNo}))
                   }}>Resend OTP</LoadingButton>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} sx={sent ? {display:'block'} : {display:'none'}}>
                   <Typography variant="p">
                     By signing up you are agreeing to our{" "}
@@ -852,7 +884,7 @@ export default function MentorSignUp() {
                 fullWidth
                 variant="contained"
                 loading={loading}
-                disabled={uploading}
+                disabled={uploading || !status || !statusnumb}
                 sx={{
                   mt: 3,
                   mb: 2,

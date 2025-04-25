@@ -92,13 +92,14 @@ const  ConfirmMentorShipPayment = ({ item, sub, stu }) => {
   // ]);
   
   useEffect(() => {
+    console.log("order", order);
     if (paymentError) {
       toast.error(paymentError.message);
       dispatch(clearError());
     }
     if (loading === false) {
       var options = {
-        key: process.env.RAZORPAY_ID,
+        key: import.meta.env.VITE_RAZORPAY_ID,
         amount: sub.price,
         currency: "INR",
         name: "PrepSaarthi",
