@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
@@ -68,6 +69,7 @@ export const signUpMentor = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error(err.response.data.message);
       return rejectWithValue(err.response.data);
     }
   }
@@ -85,6 +87,7 @@ export const updateMentorFinalInfo = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error(err.response.data.message);
       return rejectWithValue(err.response.data);
     }
   }
@@ -102,6 +105,7 @@ export const updateMentorFinalInfoAfter = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error(err.response.data.message);
       return rejectWithValue(err.response.data);
     }
   }
@@ -120,6 +124,7 @@ export const updateMentoringStatus = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error(err.response.data.message);
       return rejectWithValue(err);
     }
   }
@@ -137,6 +142,7 @@ export const updatePasswordMentor = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error(err.response.data.message);
       return rejectWithValue(err.response.data);
     }
   }
@@ -520,6 +526,8 @@ export const stusendOTPemail = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("something went wrong");
+      console.error("OTP send error:", err);
       return rejectWithValue(err.response.data);
     }
   }
@@ -538,6 +546,7 @@ export const stusendOTPnumb = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("something went wrong");
       console.error("OTP send error:", err);
       return rejectWithValue(err.response?.data || { message: "Unknown error" });
     }
@@ -559,6 +568,7 @@ export const mentorSendOTPemail = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("something went wrong");
       return rejectWithValue(err.response.data);
     }
   }
@@ -574,6 +584,7 @@ export const resendOTP = createAsyncThunk(
       const { data } = await axiosInstance.post(`/v1/users/resend/otp`, {email, mobileNumber}, config);
       return data;
     } catch (err) {
+      toast.error("something went wrong");
       return rejectWithValue(err.response.data);
     }
   }
@@ -586,6 +597,7 @@ export const sturesendOTP = createAsyncThunk(
       const { data } = await axiosInstance.post(`/v1/student/resend/otp`,{email, mobileNumber}, config);
       return data;
     } catch (err) {
+      toast.error("something went wrong");
       return rejectWithValue(err.response.data);
     }
   }
@@ -614,6 +626,7 @@ export const verifyOTP = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("Invalid OTP resend it");
       return rejectWithValue(err.response.data);
     }
   }
@@ -631,6 +644,7 @@ export const stuVerifyOTP = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("Invalid OTP resend it");
       return rejectWithValue(err.response.data);
     }
   }
@@ -650,6 +664,7 @@ export const stuVerifyOTPEmail = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("Invalid OTP");
       return rejectWithValue(err.response?.data || { message: "Something went wrong" });
     }
   }
@@ -670,6 +685,7 @@ export const mentorSendOTPnumb = createAsyncThunk(
 
       return data;
     } catch (err) {
+      toast.error("something went wrong");
       return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
@@ -689,6 +705,7 @@ export const stuVerifyOTPNumb = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("Invalid OTP resend it");
       return rejectWithValue(err.response.data);
     }
   }
@@ -709,6 +726,7 @@ export const mentorVerifyOTPEmail = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("Invalid OTP resend it");
       return rejectWithValue(err.response.data);
     }
   }
@@ -725,6 +743,7 @@ export const mentorVerifyOTPNumb = createAsyncThunk(
       );
       return data;
     } catch (err) {
+      toast.error("Invalid OTP resend it");
       return rejectWithValue(err.response.data);
     }
   }
