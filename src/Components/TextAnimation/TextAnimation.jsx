@@ -7,7 +7,7 @@ function TextAnimation() {
         sequence={[
           'to unlock your potential.',
           1500,
-          'Connect with mentors for your goals.',
+          'Connect with mentors.',
           1500,
           'Forge your future, your way.',
           1500,

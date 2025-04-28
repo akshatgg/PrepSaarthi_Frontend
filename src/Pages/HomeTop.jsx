@@ -167,7 +167,26 @@ const HomeTop = () => {
                 marginLeft: { xs: "10px", md: "0px" },
               }}
             >
-              <Button
+              {isMobile ? (
+                  <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    fontSize: "1.3vmax",
+                    backgroundColor: "#2A48E5",
+                    color: "white",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "#2037b4", // a darker yellow for hover
+                    },
+                    height: "100%",
+                    borderRadius: "2vmax",
+                  }}
+                >
+                  Connect with Mentor
+                </Button>
+              ) : (
+                <Button
                 sx={{
                   zIndex: 1,
                   position: "relative",
@@ -214,6 +233,7 @@ const HomeTop = () => {
               >
                 Connect with Mentor
               </Button>
+              )}
             </Box>
 
             {/* Products Button */}
