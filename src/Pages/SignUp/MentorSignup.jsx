@@ -45,8 +45,21 @@ const convertBase64 = (file) => {
   });
 };
 
-function OTP({ separator, length, value, onChange }) {
+function OTP({ separator, length, value, onChange, disabled }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  // Check for mobile view on component mount and window resize
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 600); // Standard mobile breakpoint
+    };
+    
+    checkMobile(); // Initial check
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const focusInput = (targetIndex) => {
     const targetInput = inputRefs.current[targetIndex];
@@ -86,7 +99,6 @@ function OTP({ separator, length, value, onChange }) {
             prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
           return otp;
         });
-
         break;
       case 'Backspace':
         event.preventDefault();
@@ -94,14 +106,12 @@ function OTP({ separator, length, value, onChange }) {
           focusInput(currentIndex - 1);
           selectInput(currentIndex - 1);
         }
-
         onChange((prevOtp) => {
           const otp =
             prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
           return otp;
         });
         break;
-
       default:
         break;
     }
@@ -139,7 +149,6 @@ function OTP({ separator, length, value, onChange }) {
     event.preventDefault();
     const clipboardData = event.clipboardData;
 
-    // Check if there is text data in the clipboard
     if (clipboardData.types.includes('text/plain')) {
       let pastedText = clipboardData.getData('text/plain');
       pastedText = pastedText.substring(0, length).trim();
@@ -164,6 +173,61 @@ function OTP({ separator, length, value, onChange }) {
     }
   };
 
+  // If on Mobile, use a more compact layout
+  if (isMobile) {
+    return (
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        width: '100%' 
+      }}>
+        {/* Mobile OTP view */}
+        <Box sx={{ 
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'space-between',
+          gap: 1
+        }}>
+          {new Array(length).fill(null).map((_, index) => (
+            <Box
+              key={index}
+              sx={{
+                flex: 1,
+                maxWidth: '40px'
+              }}
+            >
+              <input
+                style={{
+                  width: '100%',
+                  height: '40px',
+                  textAlign: 'center',
+                  fontSize: '1rem',
+                  borderRadius: '4px',
+                  border: '1px solid #C7D0DD',
+                  backgroundColor: disabled ? '#f0f0f0' : '#fff',
+                  color: '#303740',
+                }}
+                aria-label={`Digit ${index + 1} of OTP`}
+                ref={(ele) => {
+                  inputRefs.current[index] = ele;
+                }}
+                onKeyDown={(event) => handleKeyDown(event, index)}
+                onChange={(event) => handleChange(event, index)}
+                onClick={(event) => handleClick(event, index)}
+                onPaste={(event) => handlePaste(event, index)}
+                value={value[index] ?? ''}
+                disabled={disabled}
+                maxLength={1}
+              />
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    );
+  }
+
+  // Desktop/Tablet view (original styling)
   return (
     <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
       {new Array(length).fill(null).map((_, index) => (
@@ -183,6 +247,7 @@ function OTP({ separator, length, value, onChange }) {
                 onClick: (event) => handleClick(event, index),
                 onPaste: (event) => handlePaste(event, index),
                 value: value[index] ?? '',
+                disabled: disabled,
               },
             }}
           />
@@ -522,21 +587,28 @@ export default function MentorSignUp() {
                 
                 {emailsent && !status && (
   <Grid item xs={12} sx={{ display: 'block' }}>
-    <Stack direction="row" spacing={2} alignItems="center">
+    <Stack 
+      direction={{ xs: 'column', sm: 'row' }} 
+      spacing={2} 
+      alignItems={{ xs: 'stretch', sm: 'center' }}
+      sx={{ mb: 1 }}
+    >
       {/* OTP Input */}
-      <OTP
-        name="emailOTP"
-        id="emailOTP"
-        autoComplete="emailOTP"
-        separator={<span>-</span>}
-        value={gmailOtp}
-        onChange={(otp) => {
-          handleChange();
-          setgmailOtp(otp);
-        }}
-        length={5}
-        disabled={verifySuccess} // Disable input after verification
-      />
+      <Box sx={{ flex: 1 }}>
+        <OTP
+          name="emailOTP"
+          id="emailOTP"
+          autoComplete="emailOTP"
+          separator={<span>-</span>}
+          value={gmailOtp}
+          onChange={(otp) => {
+            handleChange();
+            setgmailOtp(otp);
+          }}
+          length={5}
+          disabled={verifySuccess}
+        />
+      </Box>
 
       {/* Verify Button */}
       <SubButton
@@ -547,6 +619,8 @@ export default function MentorSignUp() {
         sx={{
           backgroundColor: verifySuccess ? 'green' : '#1976d2',
           color: '#fff',
+          width: { xs: '100%', sm: 'auto' },
+          mt: { xs: 1, sm: 0 },
           '&:hover': {
             backgroundColor: verifySuccess ? 'darkgreen' : '#115293'
           }
@@ -562,7 +636,12 @@ export default function MentorSignUp() {
       onClick={() => {
         dispatch(resendOTP({ email: mentorInfo.email }));
       }}
-      disabled={verifySuccess} // Disable resend after verification
+      disabled={verifySuccess}
+      size="small"
+      sx={{
+        mt: 1,
+        fontSize: { xs: '0.75rem', sm: '0.875rem' }
+      }}
     >
       Resend OTP
     </LoadingButton>
@@ -625,46 +704,69 @@ export default function MentorSignUp() {
                 </Grid>
 
                 {numbsent && !statusnumb && (
- <Grid item xs={12} sx={ { display: 'block' }}>
- <Stack direction="row" spacing={2} alignItems="center">
-   {/* OTP Input */}
-   <OTP
-     id="numberOTP"
-     name="numberOTP"
-     separator={<span>-</span>}
-     value={NumbOtp}
-     onChange={(otp) => {
-       handleChange();
-       setNumbOtp(otp)
-     }}
-     length={5}
-     disabled={verifySuccessnumb} // Disable input after verification
-   />
+  <Grid item xs={12} sx={{ display: 'block' }}>
+    <Stack 
+      direction={{ xs: 'column', sm: 'row' }} 
+      spacing={2} 
+      alignItems={{ xs: 'stretch', sm: 'center' }}
+      sx={{ mb: 1 }}
+    >
+      {/* OTP Input */}
+      <Box sx={{ flex: 1 }}>
+        <OTP
+          id="numberOTP"
+          name="numberOTP"
+          separator={<span>-</span>}
+          value={NumbOtp}
+          onChange={(otp) => {
+            handleChange();
+            setNumbOtp(otp)
+          }}
+          length={5}
+          disabled={verifySuccessnumb}
+        />
+      </Box>
 
-   {/* Button */}
-   <SubButton
-     onClick={() => {
-       dispatch(mentorVerifyOTPNumb({otp:NumbOtp,mobileNumber: mentorInfo.phoneNo}));
-     }}
-     disabled={verifySuccessnumb}
-     sx={{
-      backgroundColor: verifySuccess ? 'green' : '#1976d2',
-      color: '#fff',
-      '&:hover': {
-        backgroundColor: verifySuccess ? 'darkgreen' : '#115293'
-      }
-    }}
-   >Verify</SubButton>
- </Stack>
- <LoadingButton
-   loading={reLoading}
-   onClick={() => {
-     dispatch(resendOTP({
-       mobileNumber: mentorInfo.phoneNo
-     }))
-   }}>Resend OTP</LoadingButton>
-</Grid>
-                )}
+      {/* Button */}
+      <SubButton
+        onClick={() => {
+          dispatch(mentorVerifyOTPNumb({otp:NumbOtp,mobileNumber: mentorInfo.phoneNo}));
+        }}
+        disabled={verifySuccessnumb}
+        sx={{
+          backgroundColor: verifySuccessnumb ? 'green' : '#1976d2',
+          color: '#fff',
+          width: { xs: '100%', sm: 'auto' },
+          mt: { xs: 1, sm: 0 },
+          '&:hover': {
+            backgroundColor: verifySuccessnumb ? 'darkgreen' : '#115293'
+          }
+        }}
+      >
+        {verifySuccessnumb ? "✓ Verified" : "Verify"}
+      </SubButton>
+    </Stack>
+    
+    {/* Resend OTP Button */}
+    <LoadingButton
+      loading={reLoading}
+      onClick={() => {
+        dispatch(resendOTP({
+          mobileNumber: mentorInfo.phoneNo
+        }))
+      }}
+      disabled={verifySuccessnumb}
+      size="small"
+      sx={{
+        mt: 1,
+        fontSize: { xs: '0.75rem', sm: '0.875rem' }
+      }}
+    >
+      Resend OTP
+    </LoadingButton>
+  </Grid>
+)}
+
                
 
                 <Grid item xs={12}>

@@ -3,6 +3,7 @@ import { Box, Typography, Grid, Avatar, Link } from "@mui/material";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import MailIcon from '@mui/icons-material/Mail';
+import WorkIcon from '@mui/icons-material/Work';
 const AboutPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -108,23 +109,29 @@ const AboutPage = () => {
           {/* Website Developer */}
           <Grid item xs={12} sm={6} md={4} textAlign="center">
             <Avatar
-              src="/images/techL.jpg"
-              alt="Vaibhav Markandeya Singh"
+              src="/images/tech.jpg"
+              alt="Akshat Gupta"
               sx={{
                 width: 150,
                 height: 150,
                 margin: "0 auto",
                 border: `3px solid #ffc43b`,
-              }}
+              }}  
             />
             <Typography variant="h6" sx={{ color: "#3A5AFF", fontWeight: "bold", mt: 2 }}>
-              Vaibhav Markandeya Singh
+              Akshat Gupta
             </Typography>
             <Typography variant="body2" sx={{ fontStyle: "italic", color: "#777" }}>
               Technical Lead & Full-Stack Developer
             </Typography>
+            <Link href="https://www.linkedin.com/in/akshatgg/" target="_blank" sx={{ color: "#ffc43b", textDecoration: "none", mt: 1 }}>
+            <LinkedInIcon />
+            </Link>
+            <Link href="http://akshatgg.vercel.app/" target="_blank" sx={{ color: "#ffc43b", textDecoration: "none", mt: 1 }}>
+            <WorkIcon />
+            </Link>
             <Link
-    href="mailto:vaibhavsingh4141@gmail.com"  // Replace with your email address
+    href="mailto:akshatg9636@gmail.com"  // Replace with your email address
     sx={{ color: '#ffc43b', textDecoration: 'none', mt: 1 }}
   >            <MailIcon />
             </Link>
