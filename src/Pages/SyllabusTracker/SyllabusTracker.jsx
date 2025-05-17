@@ -68,7 +68,9 @@ const SyllabusTracker = ({tracker}) => {
   useEffect(() => {
     if(updatedMessage){
         setProgress(updatedMessage)
-    }
+        console.log(updatedMessage)
+      }
+
   }, [updatedMessage])
   useEffect(() => {
     if(message){
