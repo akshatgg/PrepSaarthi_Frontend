@@ -44,7 +44,7 @@ const Complete = ({ checked, onChange }) => (
 
 const VideoLectures = () => {
   const { subject } = useParams();
-  const [notes, setNotes] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
   const [noteText, setNoteText] = useState('');
   const [open, setOpen] = useState(false);
@@ -66,38 +66,66 @@ const VideoLectures = () => {
     setAnchorEl(null);
   };
 
-  // Load and initialize notes
+  // Load data and merge with localStorage data
   useEffect(() => {
-    const loadNotes = () => {
+    const loadData = () => {
       try {
-        const savedNotes = localStorage.getItem(`lectureNotes-${subject}`);
-        const initialData = dataMap[subject] || [];
+        // Get base data from imported JSON
+        const baseData = dataMap[subject] || [];
         
-        if (savedNotes) {
-          const parsedNotes = JSON.parse(savedNotes);
-          const mergedData = initialData.map(item => ({
-            ...item,
-            ...parsedNotes.find(p => p.id === item.id) || {}
-          }));
-          setNotes(mergedData);
+        // Only retrieve user progress from localStorage
+        const savedProgress = localStorage.getItem(`lectureProgress-${subject}`);
+        
+        if (savedProgress) {
+          // Parse saved progress
+          const userProgress = JSON.parse(savedProgress);
+          
+          // Merge base data with user progress
+          const mergedData = baseData.map(item => {
+            const progress = userProgress[item.id];
+            return {
+              ...item,
+              completed: progress?.completed || false,
+              note: progress?.note || ''
+            };
+          });
+          
+          setDisplayData(mergedData);
         } else {
-          setNotes(initialData);
+          // If no saved progress, use base data as is
+          setDisplayData(baseData);
         }
       } catch (error) {
-        console.error('Error loading notes:', error);
-        setNotes(dataMap[subject] || []);
+        console.error('Error loading data:', error);
+        setDisplayData(dataMap[subject] || []);
       }
     };
 
-    loadNotes();
+    loadData();
   }, [subject]);
 
-  // Save notes
-  useEffect(() => {
-    if (notes.length > 0) {
-      localStorage.setItem(`lectureNotes-${subject}`, JSON.stringify(notes));
+  // Save only user progress data
+  const saveUserProgress = (updatedData) => {
+    try {
+      // Create an object with only user progress data
+      const progressData = {};
+      
+      updatedData.forEach(item => {
+        // Only store items with notes or completion status
+        if (item.note || item.completed) {
+          progressData[item.id] = {
+            completed: item.completed || false,
+            note: item.note || ''
+          };
+        }
+      });
+      
+      // Save only the progress data to localStorage
+      localStorage.setItem(`lectureProgress-${subject}`, JSON.stringify(progressData));
+    } catch (error) {
+      console.error('Error saving progress:', error);
     }
-  }, [notes, subject]);
+  };
 
   const handleNoteClick = (row) => {
     setSelectedNote(row);
@@ -108,19 +136,21 @@ const VideoLectures = () => {
   const handleSaveNote = () => {
     if (!selectedNote) return;
 
-    const updatedNotes = notes.map(note => 
-      note.id === selectedNote.id ? { ...note, note: noteText } : note
+    const updatedData = displayData.map(item => 
+      item.id === selectedNote.id ? { ...item, note: noteText } : item
     );
     
-    setNotes(updatedNotes);
+    setDisplayData(updatedData);
+    saveUserProgress(updatedData);
     setOpen(false);
   };
 
   const handleCompletionChange = (id) => {
-    const updatedNotes = notes.map(item =>
+    const updatedData = displayData.map(item =>
       item.id === id ? { ...item, completed: !item.completed } : item
     );
-    setNotes(updatedNotes);
+    setDisplayData(updatedData);
+    saveUserProgress(updatedData);
   };
 
   const handleClose = () => {
@@ -129,7 +159,13 @@ const VideoLectures = () => {
     setNoteText('');
   };
 
-  if (!notes.length) return <Typography variant="h6">Loading...</Typography>;
+  if (!displayData.length) return <Typography variant="h6">Loading...</Typography>;
+
+  // Determine the split point for Class 11 vs Class 12 based on subject
+const splitPoint = subject === "physics" ? 18 : 
+                   subject === "chemistry" ? 24 : 
+                   subject === "math" ? 23 : 0;
+
 
   return (
     <Box sx={{ p: 3 }}>
@@ -185,11 +221,7 @@ const VideoLectures = () => {
           </TableHead>
           
           <TableBody>
-            {notes.filter((row) => 
-              subject === "physics" ? row.id < 16 :
-              subject === "chemistry" ? row.id < 22 : 
-              row.id < 20
-            ).map((row) => (
+            {displayData.filter(row => row.id < splitPoint).map((row) => (
               <TableRow key={row.id} hover>
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.topic}</TableCell>
@@ -247,7 +279,7 @@ const VideoLectures = () => {
           </TableHead>
           
           <TableBody>
-            {notes.filter(row => row.id >= 16).map((row) => (
+            {displayData.filter(row => row.id >= splitPoint).map((row) => (
               <TableRow key={row.id} hover>
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.topic}</TableCell>

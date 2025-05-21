@@ -7,10 +7,17 @@ import Tab from '@mui/material/Tab';
 import { Box } from '@mui/material'
 import VideoLecture from './VideoLecture/VideoLecture';
 import Tracker from './tracker/tracker.jsx';
+import { useEffect } from 'react';
 const FlipBook = () => {
   function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-  
+//   useEffect(() => {
+//   // Run this when needed (e.g., on a reset button click or tab switch)
+//   ['lectureNotes-math', 'lectureNotes-physics', 'lectureNotes-chemistry'].forEach(key => {
+//     localStorage.removeItem(key);
+//   });
+// }, []);
+
     return (
       <div
         role="tabpanel"
